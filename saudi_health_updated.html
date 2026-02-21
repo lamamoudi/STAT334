@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>السكان والصحة في السعودية: مؤشرات ورؤية مستقبلية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --teal: #00897b; --teal-dark: #00695c; --teal-light: #e0f2f1;
+  --sand: #fff8f0; --orange: #ff7043; --yellow: #ffb300;
+  --blue: #1e88e5; --red: #e53935; --green-ok: #43a047;
+  --text: #212121; --text-soft: #546e7a; --white: #fff;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08); --radius: 20px; --radius-sm: 12px;
+}
+body { font-family:'Tajawal',sans-serif; background:#f5f7fa; color:var(--text); font-size:16px; line-height:1.7; }
+
+/* HEADER */
+.header { background:linear-gradient(135deg,#00695c 0%,#00897b 50%,#26a69a 100%); color:white; text-align:center; padding:50px 20px 65px; position:relative; overflow:hidden; }
+.header::before { content:''; position:absolute; bottom:-30px; left:0; right:0; height:60px; background:#f5f7fa; border-radius:50% 50% 0 0/100% 100% 0 0; }
+.header-flag { font-size:50px; margin-bottom:12px; }
+.header h1 { font-size:clamp(26px,5vw,44px); font-weight:900; margin-bottom:10px; }
+.header p { font-size:17px; opacity:.9; max-width:520px; margin:0 auto; font-weight:400; }
+.update-badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); color:white; font-size:12px; padding:4px 14px; border-radius:50px; margin-top:14px; }
+
+/* WRAP */
+.wrap { max-width:780px; margin:0 auto; padding:0 16px 60px; }
+
+/* INTRO */
+.intro-q { background:white; border-radius:var(--radius); padding:30px 28px; max-width:720px; margin:36px auto 0; box-shadow:var(--shadow); text-align:center; }
+.intro-q .big { font-size:22px; font-weight:800; color:var(--teal-dark); margin-bottom:10px; }
+.intro-q p { color:var(--text-soft); font-size:15px; }
+
+/* SECTION HEADER */
+.sec-header { display:flex; align-items:center; gap:12px; margin:44px 0 20px; }
+.sec-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+.sec-icon.teal { background:var(--teal-light); }
+.sec-icon.orange { background:#fff3e0; }
+.sec-icon.blue { background:#e3f2fd; }
+.sec-icon.purple { background:#f3e5f5; }
+.sec-title { font-size:22px; font-weight:800; }
+.sec-line { flex:1; height:2px; background:#eceff1; border-radius:2px; }
+
+/* FACT CARD */
+.fact-card { background:white; border-radius:var(--radius); padding:24px 22px; margin-bottom:16px; box-shadow:var(--shadow); display:flex; gap:18px; align-items:flex-start; transition:transform .2s,box-shadow .2s; border-right:5px solid transparent; cursor:default; }
+.fact-card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,0.12); }
+.fact-card.teal { border-right-color:var(--teal); }
+.fact-card.orange { border-right-color:var(--orange); }
+.fact-card.red { border-right-color:var(--red); }
+.fact-card.blue { border-right-color:var(--blue); }
+.fact-card.yellow { border-right-color:var(--yellow); }
+.fact-card.green { border-right-color:var(--green-ok); }
+.fact-card.purple { border-right-color:#8e24aa; }
+.fc-emoji { font-size:36px; flex-shrink:0; line-height:1; margin-top:2px; }
+.fc-num { font-size:34px; font-weight:900; line-height:1; margin-bottom:4px; }
+.fc-num.teal{color:var(--teal);} .fc-num.orange{color:var(--orange);} .fc-num.red{color:var(--red);}
+.fc-num.blue{color:var(--blue);} .fc-num.yellow{color:var(--yellow);} .fc-num.green{color:var(--green-ok);} .fc-num.purple{color:#8e24aa;}
+.fc-label { font-size:16px; font-weight:700; margin-bottom:5px; }
+.fc-explain { font-size:14px; color:var(--text-soft); }
+.fc-source { font-size:11px; color:#90a4ae; margin-top:6px; display:flex; align-items:center; gap:4px; }
+.fc-source::before { content:'📌'; font-size:10px; }
+
+/* SOURCE BADGE */
+.src { display:inline-block; background:#eceff1; color:#546e7a; font-size:11px; padding:2px 9px; border-radius:50px; margin-top:4px; }
+
+/* COMPARE CARD */
+.compare-card { background:white; border-radius:var(--radius); padding:24px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
+.compare-title { font-size:16px; font-weight:700; margin-bottom:16px; }
+.compare-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.compare-label { width:115px; font-size:14px; color:var(--text-soft); flex-shrink:0; }
+.compare-bar-wrap { flex:1; background:#f0f4f8; border-radius:50px; height:28px; overflow:hidden; }
+.compare-fill { height:100%; border-radius:50px; display:flex; align-items:center; padding-right:10px; font-size:13px; font-weight:700; color:white; transition:width 1.2s cubic-bezier(.25,1,.5,1); width:0; white-space:nowrap; justify-content:flex-end; }
+.compare-note { font-size:12px; color:#90a4ae; margin-top:6px; }
+
+/* STORY CARD */
+.story-card { background:linear-gradient(135deg,var(--teal-dark),var(--teal)); color:white; border-radius:var(--radius); padding:28px 24px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+.story-card::after { content:'💬'; position:absolute; bottom:-10px; left:10px; font-size:80px; opacity:.07; }
+.story-q { font-size:18px; font-weight:800; margin-bottom:10px; }
+.story-a { font-size:14px; opacity:.9; line-height:1.8; }
+.story-src { font-size:11px; opacity:.65; margin-top:10px; }
+
+/* SCALE CARD */
+.scale-card { background:white; border-radius:var(--radius); padding:24px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
+.scale-title { font-size:16px; font-weight:700; margin-bottom:16px; }
+.people-row { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+.scale-label { font-size:13px; color:var(--text-soft); margin-top:6px; }
+
+/* VISION STEP */
+.vision-steps { display:flex; flex-direction:column; gap:14px; }
+.vstep { background:white; border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); display:flex; gap:16px; align-items:center; transition:transform .2s; cursor:default; }
+.vstep:hover { transform:translateX(-4px); }
+.vstep-icon { font-size:32px; width:58px; height:58px; background:var(--teal-light); border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.vstep-title { font-size:16px; font-weight:800; color:var(--teal-dark); margin-bottom:4px; }
+.vstep-desc { font-size:14px; color:var(--text-soft); }
+.vstep-tag { display:inline-block; margin-top:6px; background:var(--teal-light); color:var(--teal-dark); padding:3px 12px; border-radius:50px; font-size:12px; font-weight:700; }
+
+/* TIMELINE */
+.timeline { position:relative; padding-right:30px; }
+.timeline::before { content:''; position:absolute; right:10px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--teal-light),var(--teal)); }
+.tl-item { position:relative; margin-bottom:22px; background:white; border-radius:var(--radius-sm); padding:16px 18px; box-shadow:var(--shadow); }
+.tl-item::before { content:''; position:absolute; right:-25px; top:18px; width:14px; height:14px; border-radius:50%; background:var(--teal); border:3px solid white; box-shadow:0 0 0 2px var(--teal); }
+.tl-year { font-size:13px; font-weight:700; color:var(--teal); margin-bottom:4px; }
+.tl-text { font-size:14px; font-weight:600; }
+.tl-sub { font-size:13px; color:var(--text-soft); margin-top:2px; }
+
+/* REC CARD */
+.rec-card { background:white; border-radius:var(--radius); padding:22px; margin-bottom:14px; box-shadow:var(--shadow); display:flex; gap:16px; align-items:flex-start; transition:transform .2s,box-shadow .2s; cursor:default; }
+.rec-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,0.1); }
+.rec-num-badge { width:40px; height:40px; border-radius:12px; font-size:18px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; }
+.bg-teal{background:var(--teal);} .bg-orange{background:var(--orange);} .bg-blue{background:var(--blue);}
+.bg-yellow{background:var(--yellow);} .bg-green{background:var(--green-ok);} .bg-purple{background:#8e24aa;}
+.bg-red{background:var(--red);} .bg-dark{background:#37474f;}
+.rec-title { font-size:16px; font-weight:800; margin-bottom:5px; }
+.rec-body { font-size:14px; color:var(--text-soft); line-height:1.7; }
+
+/* QUIZ */
+.quiz-card { background:linear-gradient(135deg,#1e88e5,#1565c0); color:white; border-radius:var(--radius); padding:28px 24px; margin-bottom:16px; box-shadow:0 8px 30px rgba(30,136,229,.3); }
+.quiz-q { font-size:18px; font-weight:800; margin-bottom:18px; }
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-opt { background:rgba(255,255,255,.15); border:2px solid rgba(255,255,255,.3); color:white; padding:12px 18px; border-radius:12px; cursor:pointer; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:500; text-align:right; transition:all .2s; }
+.quiz-opt:hover { background:rgba(255,255,255,.25); }
+.quiz-opt.correct { background:rgba(67,160,71,.7); border-color:#81c784; }
+.quiz-opt.wrong { background:rgba(229,57,53,.5); border-color:#ef9a9a; }
+.quiz-feedback { margin-top:14px; font-size:15px; font-weight:600; display:none; }
+.quiz-feedback.show { display:block; }
+
+/* SUMMARY */
+.summary-box { background:linear-gradient(135deg,#fff8e1,#fff3cd); border:2px solid var(--yellow); border-radius:var(--radius); padding:26px 24px; margin-top:40px; box-shadow:var(--shadow); }
+.summary-box h3 { font-size:20px; font-weight:900; color:#e65100; margin-bottom:12px; }
+.summary-box ul { list-style:none; }
+.summary-box li { padding:6px 0; font-size:15px; display:flex; gap:8px; align-items:flex-start; }
+.summary-box li::before { content:'✓'; color:var(--teal); font-weight:900; flex-shrink:0; margin-top:2px; }
+
+/* SOURCES TABLE */
+.sources-section { background:white; border-radius:var(--radius); padding:24px 22px; margin-top:30px; box-shadow:var(--shadow); }
+.sources-title { font-size:17px; font-weight:800; color:var(--text); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.source-row { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid #f0f4f8; align-items:flex-start; }
+.source-row:last-child { border-bottom:none; }
+.src-num { width:24px; height:24px; background:var(--teal-light); color:var(--teal-dark); border-radius:50%; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.src-info { flex:1; }
+.src-name { font-size:14px; font-weight:700; color:var(--text); }
+.src-detail { font-size:12px; color:var(--text-soft); margin-top:2px; }
+.src-year { display:inline-block; background:#e3f2fd; color:#1565c0; font-size:11px; padding:2px 8px; border-radius:50px; font-weight:700; }
+
+/* ALERT BOX */
+.alert-box { background:#fff3e0; border:1px solid #ffcc80; border-radius:var(--radius-sm); padding:16px 18px; margin-bottom:16px; display:flex; gap:12px; align-items:flex-start; font-size:14px; color:#bf360c; }
+
+/* FOOTER */
+.footer { background:#263238; color:rgba(255,255,255,.45); text-align:center; padding:26px 20px; font-size:12px; line-height:2; }
+
+@media(max-width:500px){
+  .fact-card,.rec-card{ flex-direction:column; gap:8px; }
+  .fc-num { font-size:28px; }
+  .vstep { flex-direction:column; text-align:center; }
+  .compare-label { width:80px; font-size:12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-flag">🇸🇦</div>
+  <h1>صحة المجتمع السعودي:<br>أين نحن وإلى أين نتجه؟</h1>
+  <p>أرقام تخصّنا جميعاً — واقعنا الصحي وما تعد به رؤية 2030</p>
+</div>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div class="intro-q" style="margin-top:36px;">
+    <div class="big">🤔 ليش يهم يعدّون الناس؟</div>
+    <p>لما الحكومة تعرف كم عدد الناس، وين يعيشون، وكم عمرهم — تقدر تبني المستشفيات الصح، وتوجّه الأدوية للناس اللي تحتاجها، وتخطط للمستقبل. الإحصاء السكاني = خارطة طريق الصحة.</p>
+  </div>
+
+  <!-- ─── SECTION 1 ─── -->
+  <div class="sec-header">
+    <div class="sec-icon teal">👥</div>
+    <div class="sec-title">من نحن؟ أرقام محدّثة 2024</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="fact-card teal">
+    <div class="fc-emoji">🇸🇦</div>
+    <div class="fc-body">
+      <div class="fc-num teal">35.3 مليون</div>
+      <div class="fc-label">إجمالي سكان المملكة منتصف 2024</div>
+      <div class="fc-explain">منهم 19.6 مليون سعودي (55.6%) و15.7 مليون مقيم غير سعودي. المملكة زادت 1.6 مليون شخص في سنة واحدة فقط!</div>
+      <div class="fc-source">الهيئة العامة للإحصاء (GASTAT) — تقرير تقديرات السكان 2024</div>
+    </div>
+  </div>
+
+  <div class="fact-card blue">
+    <div class="fc-emoji">📈</div>
+    <div class="fc-body">
+      <div class="fc-num blue">4.7%</div>
+      <div class="fc-label">معدل النمو السكاني الإجمالي 2024</div>
+      <div class="fc-explain">نمو السعوديين فقط 2% سنوياً، بينما الزيادة الكبيرة جاءت من العمالة الوافدة التي ارتفعت 8.3%. هذا يؤثر مباشرة على احتياجات الخدمات الصحية.</div>
+      <div class="fc-source">الهيئة العامة للإحصاء (GASTAT) 2024</div>
+    </div>
+  </div>
+
+  <div class="fact-card orange">
+    <div class="fc-emoji">👶</div>
+    <div class="fc-body">
+      <div class="fc-num orange">74.7%</div>
+      <div class="fc-label">نسبة من هم بين 15 و64 سنة (الشريحة المنتجة)</div>
+      <div class="fc-explain">أكثر من ثلاثة أرباع السكان في سن العمل — فرصة اقتصادية كبيرة تستوجب الاستثمار في صحتهم الوقائية اليوم.</div>
+      <div class="fc-source">GASTAT — تقديرات السكان 2024 (argaam.com)</div>
+    </div>
+  </div>
+
+  <div class="fact-card yellow">
+    <div class="fc-emoji">👴</div>
+    <div class="fc-body">
+      <div class="fc-num yellow">2.8%</div>
+      <div class="fc-label">نسبة كبار السن (65+) — حوالي 988 ألف شخص</div>
+      <div class="fc-explain">النسبة صغيرة الآن، لكنها في تصاعد مستمر. كل زيادة تعني ضغطاً أكبر على خدمات الرعاية المزمنة والمستشفيات.</div>
+      <div class="fc-source">GASTAT — تقديرات السكان 2024</div>
+    </div>
+  </div>
+
+  <!-- People visual -->
+  <div class="scale-card">
+    <div class="scale-title">🔎 من كل 10 أشخاص في المملكة...</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:28px;margin-bottom:10px;">
+      <span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span>
+      <span title="مقيم غير سعودي" style="opacity:.45;">👤</span><span title="مقيم غير سعودي" style="opacity:.45;">👤</span><span title="مقيم غير سعودي" style="opacity:.45;">👤</span><span title="مقيم غير سعودي" style="opacity:.45;">👤</span>
+    </div>
+    <div class="scale-label" style="font-weight:700;color:var(--teal);">6 سعوديين + 4 مقيمين = 10 يحتاجون خدمات صحية</div>
+    <div class="scale-label">منظومة الصحة تخدم الجميع بغض النظر عن الجنسية</div>
+  </div>
+
+  <!-- ─── SECTION 2: HEALTH ─── -->
+  <div class="sec-header">
+    <div class="sec-icon orange">🩺</div>
+    <div class="sec-title">صحتنا — الواقع بدون تجميل</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="story-card">
+    <div class="story-q">ليش السكري عندنا أكثر من العالم؟</div>
+    <div class="story-a">واحد من كل 4 سعوديين (20-79 سنة) مصاب بالسكري — المملكة في العشرة الأولى عالمياً، والثانية على مستوى الشرق الأوسط بعد الكويت. الأكل كثير السكر والدهون، وقلة الحركة، والوراثة كلها عوامل مجتمعة. ومن المتوقع أن يصل عدد المصابين 8.4 مليون بحلول 2030 ما لم تتغير الأنماط!</div>
+    <div class="story-src">📌 المصدر: Frontiers in Clinical Diabetes — ديسمبر 2024 | World Bank 2024</div>
+  </div>
+
+  <div class="fact-card red">
+    <div class="fc-emoji">🩸</div>
+    <div class="fc-body">
+      <div class="fc-num red">23.1%</div>
+      <div class="fc-label">معدل الإصابة بالسكري لدى البالغين (20-79 سنة)</div>
+      <div class="fc-explain">هذا يعني 2.5 ضعف المعدل العالمي (9%). دراسة 2024 من جامعة حائل وجدت معدل 27% في العينة المدروسة — مؤشر خطير.</div>
+      <div class="fc-source">World Bank Health Indicators 2024 | PMC — University of Hail Study 2024</div>
+    </div>
+  </div>
+
+  <!-- Comparison bar -->
+  <div class="compare-card">
+    <div class="compare-title">📊 مقارنة معدل السكري — نحن والعالم</div>
+    <div class="compare-row">
+      <div class="compare-label">🇸🇦 المملكة</div>
+      <div class="compare-bar-wrap"><div class="compare-fill" data-w="90%" style="background:linear-gradient(90deg,#e53935,#ef5350);">23.1%</div></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-label">🌍 عالمياً</div>
+      <div class="compare-bar-wrap"><div class="compare-fill" data-w="34%" style="background:linear-gradient(90deg,#1e88e5,#42a5f5);">9%</div></div>
+    </div>
+    <div class="compare-note">📌 World Bank 2024 + IDF Atlas</div>
+  </div>
+
+  <!-- Obesity -->
+  <div class="fact-card orange">
+    <div class="fc-emoji">⚖️</div>
+    <div class="fc-body">
+      <div class="fc-num orange">1 من كل 4</div>
+      <div class="fc-label">بالغ سعودي يعاني من السمنة (BMI ≥30)</div>
+      <div class="fc-explain">دراسة 2014 على 10,735 شخصاً وجدت 28.7% سمنة — النساء أعلى (33.5%) مقابل الرجال (24.1%). الاتجاه التصاعدي مستمر منذ التسعينيات.</div>
+      <div class="fc-source">WHO EMRO 2023 | PMC Systematic Review 2024 (Saudi Pharmaceutical Journal)</div>
+    </div>
+  </div>
+
+  <div class="fact-card purple">
+    <div class="fc-emoji">💸</div>
+    <div class="fc-body">
+      <div class="fc-num purple">19.6 مليار$</div>
+      <div class="fc-label">التكلفة الاقتصادية السنوية للسمنة والزيادة في الوزن</div>
+      <div class="fc-explain">هذا يعادل 572 دولار لكل شخص في المملكة و2.4% من الناتج المحلي. ومتوقع أن يرتفع لـ 150 مليار دولار بحلول 2060 إذا استمر الوضع!</div>
+      <div class="fc-source">World Obesity Federation 2023 — استشهدت به دراسة PMC 2024</div>
+    </div>
+  </div>
+
+  <!-- Scale visual obesity -->
+  <div class="scale-card">
+    <div class="scale-title">⚖️ من كل 4 بالغين سعوديين...</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:28px;margin-bottom:10px;">
+      <span title="يعاني من السمنة">🔴</span>
+      <span style="opacity:.25;">⚪</span><span style="opacity:.25;">⚪</span><span style="opacity:.25;">⚪</span>
+    </div>
+    <div class="scale-label" style="font-weight:700;color:var(--orange);">1 منهم يعاني من السمنة</div>
+    <div class="scale-label">السمنة ليست مجرد مشكلة مظهر — هي بوابة للسكري وضغط الدم وأمراض القلب</div>
+  </div>
+
+  <!-- Life expectancy -->
+  <div class="fact-card green">
+    <div class="fc-emoji">🎂</div>
+    <div class="fc-body">
+      <div class="fc-num green">77.6 سنة</div>
+      <div class="fc-label">متوسط العمر المتوقع في المملكة — 2024</div>
+      <div class="fc-explain">تحسّن حقيقي ومستمر! وصلنا 77.6 سنة بحسب تقرير "التحول الصحي" الرسمي 2024. لكن هدف رؤية 2030 هو 80 سنة — لا يزال أمامنا شوط.</div>
+      <div class="fc-source">وكالة الأنباء السعودية (SPA) — تقرير "التحول الصحي" 2024</div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="sec-header" style="margin-top:30px;margin-bottom:16px;">
+    <div class="sec-icon teal">📅</div>
+    <div class="sec-title">رحلة متوسط العمر عبر الزمن</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1970</div>
+      <div class="tl-text">~64 سنة</div>
+      <div class="tl-sub">قبل التوسع الكبير في البنية الصحية</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2000</div>
+      <div class="tl-text">~72 سنة</div>
+      <div class="tl-sub">بعد انتشار المستشفيات والرعاية الأولية في كل المناطق</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2024</div>
+      <div class="tl-text">77.6 سنة</div>
+      <div class="tl-sub">تحسين خدمات الطوارئ والأدوية وبرامج التحول الصحي</div>
+    </div>
+    <div class="tl-item" style="border:2px dashed var(--teal);background:var(--teal-light);">
+      <div class="tl-year" style="color:var(--orange);">🎯 هدف 2030</div>
+      <div class="tl-text" style="color:var(--teal-dark);">80 سنة</div>
+      <div class="tl-sub">يحتاج تسريع في مكافحة السمنة والسكري وأمراض القلب</div>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    <span style="font-size:20px;flex-shrink:0;">⚠️</span>
+    <div>بحث WHO 2018 يُشير إلى أن الوصول لهدف 80 سنة صعب جداً ما لم تُعالج المملكة ثلاثة تحديات رئيسية: التدخين، السمنة، وقلة النشاط البدني — وهي محاور رؤية 2030 الصحية تحديداً.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-card">
+    <div class="quiz-q">❓ اختبر نفسك — كم تبلغ نسبة السكري لدى البالغين في المملكة؟</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,false)">حوالي 10%</button>
+      <button class="quiz-opt" onclick="answer(this,true)">حوالي 23%</button>
+      <button class="quiz-opt" onclick="answer(this,false)">حوالي 5%</button>
+    </div>
+    <div class="quiz-feedback" id="qfeedback"></div>
+  </div>
+
+  <!-- ─── SECTION 3: VISION 2030 ─── -->
+  <div class="sec-header">
+    <div class="sec-icon blue">🎯</div>
+    <div class="sec-title">ماذا تعد رؤية 2030 للصحة؟</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="story-card" style="background:linear-gradient(135deg,#0d47a1,#1565c0);">
+    <div class="story-q">الفكرة الكبيرة 💡</div>
+    <div class="story-a">رؤية 2030 تقول: "بدل ما ننتظر الناس يمرضون ثم نعالجهم، نساعدهم يبقوا أصحاء من البداية." وتهدف أيضاً لخفض معدل الوفيات المبكرة من الأمراض المزمنة بتخفيض "SMR" من 510 إلى 324 لكل 100 ألف بحلول 2030.</div>
+    <div class="story-src">📌 Journal of Epidemiology and Global Health — مارس 2025</div>
+  </div>
+
+  <div class="vision-steps">
+    <div class="vstep">
+      <div class="vstep-icon">❤️</div>
+      <div class="vstep-content">
+        <div class="vstep-title">رفع متوسط العمر لـ 80 سنة</div>
+        <div class="vstep-desc">وصلنا 77.6 سنة في 2024 — تقدم جيد لكن يحتاج تسريعاً. المفتاح: مكافحة السمنة والتدخين وتحسين جودة الرعاية الأولية.</div>
+        <span class="vstep-tag">📈 77.6 → 80 سنة</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">🥤</div>
+      <div class="vstep-content">
+        <div class="vstep-title">الحرب على السكر والسمنة</div>
+        <div class="vstep-desc">ضريبة 50% على الغازيات و100% على مشروبات الطاقة (2017) أسفرت عن تراجع 35% في مبيعات المشروبات الغازية. هدف 2030: تخفيض السمنة 3% والسكري 10%.</div>
+        <span class="vstep-tag">🎯 Brookings 2022</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">🏥</div>
+      <div class="vstep-content">
+        <div class="vstep-title">مراكز صحية أقرب للناس</div>
+        <div class="vstep-desc">نموذج الرعاية الجديد يُقدّم الوقاية على العلاج — المستشفيات تتحول لمراكز تخصصية بينما تتوسع عيادات الرعاية الأولية في كل حي.</div>
+        <span class="vstep-tag">🏡 الرعاية قريبة منك</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">🎗️</div>
+      <div class="vstep-content">
+        <div class="vstep-title">خطة "324" للأمراض المزمنة</div>
+        <div class="vstep-desc">هدف تقليص وفيات الأمراض المزمنة (السكري، السرطان، القلب) من 510 إلى 324 وفاة لكل 100 ألف — بالفحص المبكر والعلاج المنتظم وتغيير نمط الحياة.</div>
+        <span class="vstep-tag">📋 324 خطة وطنية</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">📱</div>
+      <div class="vstep-content">
+        <div class="vstep-title">الصحة الرقمية في يدك</div>
+        <div class="vstep-desc">ملفك الطبي موحّد ومتاح لأي طبيب، استشارات عن بُعد، وتطبيقات متابعة صحتك اليومية. المملكة تتصدر المنطقة في التحول الرقمي الصحي.</div>
+        <span class="vstep-tag">📲 الطب عن بُعد</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 4: RECOMMENDATIONS ─── -->
+  <div class="sec-header">
+    <div class="sec-icon purple">💡</div>
+    <div class="sec-title">ماذا نقترح؟</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-teal">1</div>
+    <div>
+      <div class="rec-title">🔗 اربط تعداد السكان بتوزيع المستشفيات</div>
+      <div class="rec-body">بيانات 2024 تُظهر أن 80% من السكان يتركزون في 10 مدن كبرى. هذا يعني: التوسع السريع في الخدمات الصحية بهذه المدن أولاً، ثم ردم الفجوة مع المناطق النائية عبر الطب عن بُعد.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-orange">2</div>
+    <div>
+      <div class="rec-title">⏰ التحرك الآن قبل أن يتضاعف كبار السن</div>
+      <div class="rec-body">نسبة كبار السن 2.8% اليوم — لكنها ستتضاعف مع تقدم الجيل الحالي في السن. بناء منظومة رعاية مسنين متكاملة اليوم أوفر بكثير من الانتظار حتى تصبح الأزمة حرجة.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-red">3</div>
+    <div>
+      <div class="rec-title">🥗 حوّل المدارس إلى محطات صحية</div>
+      <div class="rec-body">22.5% من سكان المملكة أعمارهم بين 0 و14 سنة. وجبات مدرسية صحية، حصص رياضية يومية حقيقية، وتثقيف غذائي منذ الصغر = استثمار بمليارات الريالات في صحة المستقبل.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-blue">4</div>
+    <div>
+      <div class="rec-title">👩 برامج صحية مخصصة للمرأة</div>
+      <div class="rec-body">معدل السمنة لدى النساء (33.5%) أعلى من الرجال (24.1%). برامج متخصصة لمرحلة الحمل وما بعد الأربعين يمكنها تقليص هذه الفجوة وإنقاذ آلاف الأسر من عبء المرض.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-yellow">5</div>
+    <div>
+      <div class="rec-title">🚶 حوّل بيئات العمل لتشجع الحركة</div>
+      <div class="rec-body">74.7% من السكان في سن العمل — أغلبهم يقضون ساعات طويلة جالسين. سياسات مؤسسية بسيطة (استراحات حركة، مواقف دراجات، سلالم أمام المصعد) تقلل السمنة وتزيد الإنتاجية معاً.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-green">6</div>
+    <div>
+      <div class="rec-title">📊 استخدم بيانات التعداد لتتبع الفجوات الصحية</div>
+      <div class="rec-body">التعداد السكاني يكشف مناطق "صحياً مُهملة". تحديث خرائط توزيع الخدمات الصحية كل 3 سنوات بناءً على نمو السكان ضروري لضمان العدالة الصحية لكل مواطن.</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <h3>🌟 ما الذي نستخلصه؟</h3>
+    <ul>
+      <li>35.3 مليون نسمة (2024) مجتمع متنوع يحتاج خدمات صحية متكاملة</li>
+      <li>السكري (23.1%) والسمنة (1 من كل 4) تحديان يمكن التغلب عليهما بالوعي والسياسات</li>
+      <li>متوسط العمر وصل 77.6 سنة — تقدم حقيقي لكن هدف 80 يحتاج جهداً أكبر</li>
+      <li>رؤية 2030 على الطريق الصح والأرقام تتحسن لكن التسريع ضروري</li>
+      <li>كل فرد يقدر يساهم: تغذية أفضل، حركة يومية، فحوصات دورية</li>
+    </ul>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="sources-section">
+    <div class="sources-title">📚 مصادر البيانات الموثّقة</div>
+
+    <div class="source-row">
+      <div class="src-num">1</div>
+      <div class="src-info">
+        <div class="src-name">الهيئة العامة للإحصاء (GASTAT)</div>
+        <div class="src-detail">تقرير تقديرات السكان 2024 — إجمالي السكان، التركيبة العمرية، معدلات النمو <span class="src-year">2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">2</div>
+      <div class="src-info">
+        <div class="src-name">World Bank Health Indicators</div>
+        <div class="src-detail">Diabetes prevalence (% of population ages 20-79) — Saudi Arabia: 23.1% <span class="src-year">2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">3</div>
+      <div class="src-info">
+        <div class="src-name">Frontiers in Clinical Diabetes & Healthcare</div>
+        <div class="src-detail">AL-Rasheedi et al. — Status of diabetes mellitus in different regions of KSA (2024) <span class="src-year">ديسمبر 2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">4</div>
+      <div class="src-info">
+        <div class="src-name">PMC / Saudi Pharmaceutical Journal</div>
+        <div class="src-detail">Al-Omar et al. — A systematic review of obesity burden in Saudi Arabia (2024) <span class="src-year">أكتوبر 2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">5</div>
+      <div class="src-info">
+        <div class="src-name">WHO EMRO</div>
+        <div class="src-detail">Epidemiology of obesity and control interventions in Saudi Arabia <span class="src-year">2023</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">6</div>
+      <div class="src-info">
+        <div class="src-name">وكالة الأنباء السعودية (SPA)</div>
+        <div class="src-detail">تقرير "التحول الصحي" — متوسط العمر 77.6 سنة <span class="src-year">2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">7</div>
+      <div class="src-info">
+        <div class="src-name">Brookings Institution</div>
+        <div class="src-detail">Countdown to 2030: Addressing the stubborn obesity challenge in Saudi Arabia — مستهدفات رؤية 2030 الصحية <span class="src-year">2022</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">8</div>
+      <div class="src-info">
+        <div class="src-name">Journal of Epidemiology and Global Health</div>
+        <div class="src-detail">Saudi Arabia's Mid-Journey Progress: SDGs and Vision 2030 Health — خطة 324 <span class="src-year">مارس 2025</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">9</div>
+      <div class="src-info">
+        <div class="src-name">World Obesity Federation</div>
+        <div class="src-detail">World Obesity Atlas 2023 — التكلفة الاقتصادية للسمنة في المملكة <span class="src-year">2023</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="footer">
+  جميع الأرقام مستخلصة من المصادر الرسمية والدراسات العلمية المحكّمة المذكورة أعلاه<br>
+  آخر تحديث للبيانات: 2024–2025 · الصفحة للتوعية العامة والأغراض التعليمية
+</div>
+
+<script>
+  function animateBars() {
+    document.querySelectorAll('.compare-fill[data-w]').forEach(el => {
+      el.style.width = el.getAttribute('data-w');
+    });
+  }
+  setTimeout(animateBars, 500);
+
+  function answer(btn, correct) {
+    const opts = document.querySelectorAll('.quiz-opt');
+    opts.forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+    const fb = document.getElementById('qfeedback');
+    if (correct) {
+      btn.classList.add('correct');
+      fb.textContent = '✅ صح! المملكة تُسجّل 23.1% بحسب بيانات World Bank 2024 — أكثر من ضعف المعدل العالمي (9%).';
+      fb.style.color = '#a5d6a7';
+    } else {
+      btn.classList.add('wrong');
+      opts.forEach(o => { if(o.textContent.includes('23')) o.classList.add('correct'); });
+      fb.textContent = '❌ الجواب هو 23.1%. المملكة من أعلى دول العالم في معدل السكري — المصدر: World Bank 2024.';
+      fb.style.color = '#ef9a9a';
+    }
+    fb.classList.add('show');
+  }
+</script>
+</body>
+</html>
