@@ -1,895 +1,597 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>الإحصاء السكاني — بوصلة التنمية</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>السكان والصحة في السعودية: مؤشرات ورؤية مستقبلية</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#0a0e1a;color:#e2e8f0;font-family:'Cairo',sans-serif;direction:rtl;overflow-x:hidden}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#0a0e1a}::-webkit-scrollbar-thumb{background:#7c3aed;border-radius:3px}
+* { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --teal: #00897b; --teal-dark: #00695c; --teal-light: #e0f2f1;
+  --sand: #fff8f0; --orange: #ff7043; --yellow: #ffb300;
+  --blue: #1e88e5; --red: #e53935; --green-ok: #43a047;
+  --text: #212121; --text-soft: #546e7a; --white: #fff;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08); --radius: 20px; --radius-sm: 12px;
+}
+body { font-family:'Tajawal',sans-serif; background:#f5f7fa; color:var(--text); font-size:16px; line-height:1.7; }
 
-/* BG animations */
-@keyframes blobMove1{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(60px,-40px) scale(1.1)}66%{transform:translate(-30px,50px) scale(0.9)}}
-@keyframes blobMove2{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(-50px,60px) scale(1.15)}66%{transform:translate(40px,-30px) scale(0.85)}}
-@keyframes blobMove3{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.2)}}
-@keyframes slideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
-@keyframes ringRotate{to{transform:rotate(360deg)}}
-@keyframes ringRotateR{to{transform:rotate(-360deg)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-@keyframes ripple{0%{r:4;opacity:.25}100%{r:9;opacity:0}}
+/* HEADER */
+.header { background:linear-gradient(135deg,#00695c 0%,#00897b 50%,#26a69a 100%); color:white; text-align:center; padding:50px 20px 65px; position:relative; overflow:hidden; }
+.header::before { content:''; position:absolute; bottom:-30px; left:0; right:0; height:60px; background:#f5f7fa; border-radius:50% 50% 0 0/100% 100% 0 0; }
+.header-flag { font-size:50px; margin-bottom:12px; }
+.header h1 { font-size:clamp(26px,5vw,44px); font-weight:900; margin-bottom:10px; }
+.header p { font-size:17px; opacity:.9; max-width:520px; margin:0 auto; font-weight:400; }
+.update-badge { display:inline-block; background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); color:white; font-size:12px; padding:4px 14px; border-radius:50px; margin-top:14px; }
 
-.blob1{animation:blobMove1 18s ease-in-out infinite}
-.blob2{animation:blobMove2 22s ease-in-out infinite}
-.blob3{animation:blobMove3 15s ease-in-out infinite}
-.page-content{animation:slideIn .4s ease}
-.card-hover{transition:all .3s}
-.card-hover:hover{transform:translateY(-4px);border-color:rgba(0,212,255,.3)!important}
-.timeline-dot{animation:pulse 2s ease-in-out infinite}
-.nav-btn{transition:all .3s;cursor:pointer;white-space:nowrap}
-.nav-btn:hover{transform:translateY(-2px)}
+/* WRAP */
+.wrap { max-width:780px; margin:0 auto; padding:0 16px 60px; }
 
-/* BG fixed */
-.bg-fixed{position:fixed;inset:0;z-index:0;pointer-events:none}
-.bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,212,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.04) 1px,transparent 1px);background-size:60px 60px}
-.bg-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(0,212,255,.07) 1px,transparent 1px);background-size:80px 80px}
-.bg-line1{position:absolute;top:0;right:30%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,rgba(0,212,255,.08),transparent)}
-.bg-line2{position:absolute;top:0;right:60%;width:1px;height:100%;background:linear-gradient(to bottom,transparent,rgba(124,58,237,.08),transparent)}
+/* INTRO */
+.intro-q { background:white; border-radius:var(--radius); padding:30px 28px; max-width:720px; margin:36px auto 0; box-shadow:var(--shadow); text-align:center; }
+.intro-q .big { font-size:22px; font-weight:800; color:var(--teal-dark); margin-bottom:10px; }
+.intro-q p { color:var(--text-soft); font-size:15px; }
 
-/* Layout */
-header{position:relative;z-index:1;text-align:center;padding:3rem 1.5rem 2rem;background:linear-gradient(180deg,rgba(0,212,255,.06) 0%,transparent 100%);border-bottom:1px solid rgba(0,212,255,.12)}
-nav.main-nav{position:sticky;top:0;z-index:100;background:rgba(10,14,26,.96);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:.6rem 1rem;overflow-x:auto;scrollbar-width:none}
-nav.main-nav::-webkit-scrollbar{display:none}
-.nav-inner{display:flex;gap:.4rem;justify-content:center;min-width:max-content;margin:0 auto}
-main{max-width:1100px;margin:0 auto;padding:2.5rem 1.2rem 4rem;position:relative;z-index:1}
-footer{background:rgba(0,0,0,.35);border-top:1px solid rgba(0,212,255,.15);padding:2rem 1.5rem;text-align:center;position:relative;z-index:1}
+/* SECTION HEADER */
+.sec-header { display:flex; align-items:center; gap:12px; margin:44px 0 20px; }
+.sec-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0; }
+.sec-icon.teal { background:var(--teal-light); }
+.sec-icon.orange { background:#fff3e0; }
+.sec-icon.blue { background:#e3f2fd; }
+.sec-icon.purple { background:#f3e5f5; }
+.sec-title { font-size:22px; font-weight:800; }
+.sec-line { flex:1; height:2px; background:#eceff1; border-radius:2px; }
 
-/* Typography */
-h1{font-family:'Tajawal',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.25;margin-bottom:.3rem}
-.h2{font-family:'Tajawal',sans-serif;font-size:clamp(1.4rem,3vw,2.1rem);font-weight:900;color:#e2e8f0;margin-bottom:.5rem}
-.tag{font-size:.7rem;font-weight:700;letter-spacing:2px;color:#00d4ff;margin-bottom:.5rem;display:block;text-transform:uppercase}
-.muted{color:#94a3b8;line-height:1.9;font-size:.93rem}
-.sub-text{color:#94a3b8;font-size:.96rem;line-height:1.85;max-width:580px;margin:.6rem auto 0}
+/* FACT CARD */
+.fact-card { background:white; border-radius:var(--radius); padding:24px 22px; margin-bottom:16px; box-shadow:var(--shadow); display:flex; gap:18px; align-items:flex-start; transition:transform .2s,box-shadow .2s; border-right:5px solid transparent; cursor:default; }
+.fact-card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,0.12); }
+.fact-card.teal { border-right-color:var(--teal); }
+.fact-card.orange { border-right-color:var(--orange); }
+.fact-card.red { border-right-color:var(--red); }
+.fact-card.blue { border-right-color:var(--blue); }
+.fact-card.yellow { border-right-color:var(--yellow); }
+.fact-card.green { border-right-color:var(--green-ok); }
+.fact-card.purple { border-right-color:#8e24aa; }
+.fc-emoji { font-size:36px; flex-shrink:0; line-height:1; margin-top:2px; }
+.fc-num { font-size:34px; font-weight:900; line-height:1; margin-bottom:4px; }
+.fc-num.teal{color:var(--teal);} .fc-num.orange{color:var(--orange);} .fc-num.red{color:var(--red);}
+.fc-num.blue{color:var(--blue);} .fc-num.yellow{color:var(--yellow);} .fc-num.green{color:var(--green-ok);} .fc-num.purple{color:#8e24aa;}
+.fc-label { font-size:16px; font-weight:700; margin-bottom:5px; }
+.fc-explain { font-size:14px; color:var(--text-soft); }
+.fc-source { font-size:11px; color:#90a4ae; margin-top:6px; display:flex; align-items:center; gap:4px; }
+.fc-source::before { content:'📌'; font-size:10px; }
 
-/* Cards */
-.card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:1.8rem}
-.card-border-c1{border-right:4px solid #00d4ff}
-.card-border-c2{border-right:4px solid #7c3aed}
-.card-border-c3{border-right:4px solid #f59e0b}
-.card-border-c4{border-right:4px solid #10b981}
+/* SOURCE BADGE */
+.src { display:inline-block; background:#eceff1; color:#546e7a; font-size:11px; padding:2px 9px; border-radius:50px; margin-top:4px; }
 
-/* Grid utils */
-.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
-.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
-.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:.8rem}
-.flex-gap{display:flex;gap:1rem;flex-wrap:wrap}
+/* COMPARE CARD */
+.compare-card { background:white; border-radius:var(--radius); padding:24px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
+.compare-title { font-size:16px; font-weight:700; margin-bottom:16px; }
+.compare-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.compare-label { width:115px; font-size:14px; color:var(--text-soft); flex-shrink:0; }
+.compare-bar-wrap { flex:1; background:#f0f4f8; border-radius:50px; height:28px; overflow:hidden; }
+.compare-fill { height:100%; border-radius:50px; display:flex; align-items:center; padding-right:10px; font-size:13px; font-weight:700; color:white; transition:width 1.2s cubic-bezier(.25,1,.5,1); width:0; white-space:nowrap; justify-content:flex-end; }
+.compare-note { font-size:12px; color:#90a4ae; margin-top:6px; }
 
-/* Stat bar */
-.bar-track{height:7px;background:rgba(255,255,255,.07);border-radius:50px;overflow:hidden;margin-top:6px}
-.bar-fill{height:100%;border-radius:50px;transition:width 1.2s ease}
+/* STORY CARD */
+.story-card { background:linear-gradient(135deg,var(--teal-dark),var(--teal)); color:white; border-radius:var(--radius); padding:28px 24px; margin-bottom:16px; box-shadow:var(--shadow); position:relative; overflow:hidden; }
+.story-card::after { content:'💬'; position:absolute; bottom:-10px; left:10px; font-size:80px; opacity:.07; }
+.story-q { font-size:18px; font-weight:800; margin-bottom:10px; }
+.story-a { font-size:14px; opacity:.9; line-height:1.8; }
+.story-src { font-size:11px; opacity:.65; margin-top:10px; }
 
-/* Chart container */
-.chart-wrap{background:rgba(0,0,0,.25);border-radius:14px;padding:1rem;position:relative}
-.chart-explain{background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:.7rem 1rem;font-size:.78rem;color:#94a3b8;line-height:1.8;margin-top:8px}
+/* SCALE CARD */
+.scale-card { background:white; border-radius:var(--radius); padding:24px 22px; margin-bottom:16px; box-shadow:var(--shadow); }
+.scale-title { font-size:16px; font-weight:700; margin-bottom:16px; }
+.people-row { display:flex; flex-wrap:wrap; gap:4px; margin-bottom:8px; }
+.scale-label { font-size:13px; color:var(--text-soft); margin-top:6px; }
 
-/* Timeline */
-.timeline-wrap{position:relative;max-width:700px;margin:0 auto}
-.timeline-line{position:absolute;top:0;bottom:0;right:90px;width:2px;background:linear-gradient(to bottom,#00d4ff,#7c3aed);z-index:0}
-.timeline-item{display:flex;gap:1rem;align-items:flex-start;margin-bottom:2rem;position:relative}
-.tl-year{width:80px;text-align:center;color:#00d4ff;font-weight:900;font-family:'Tajawal',sans-serif;font-size:.9rem;padding-top:.3rem;flex-shrink:0}
-.tl-dot{width:13px;height:13px;border-radius:50%;background:#00d4ff;border:3px solid #0a0e1a;flex-shrink:0;position:relative;z-index:1;margin-top:.35rem;box-shadow:0 0 12px rgba(0,212,255,.5)}
-.tl-card{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:1rem 1.2rem;margin-right:.5rem}
+/* VISION STEP */
+.vision-steps { display:flex; flex-direction:column; gap:14px; }
+.vstep { background:white; border-radius:var(--radius); padding:20px 22px; box-shadow:var(--shadow); display:flex; gap:16px; align-items:center; transition:transform .2s; cursor:default; }
+.vstep:hover { transform:translateX(-4px); }
+.vstep-icon { font-size:32px; width:58px; height:58px; background:var(--teal-light); border-radius:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.vstep-title { font-size:16px; font-weight:800; color:var(--teal-dark); margin-bottom:4px; }
+.vstep-desc { font-size:14px; color:var(--text-soft); }
+.vstep-tag { display:inline-block; margin-top:6px; background:var(--teal-light); color:var(--teal-dark); padding:3px 12px; border-radius:50px; font-size:12px; font-weight:700; }
 
-/* Pyramid */
-.pyr-row{display:flex;align-items:center;gap:.5rem;margin-bottom:5px}
-.pyr-label{font-size:.66rem;color:#94a3b8;width:42px;text-align:center;flex-shrink:0}
-.pyr-bars{flex:1;display:flex;align-items:center;height:22px;position:relative}
+/* TIMELINE */
+.timeline { position:relative; padding-right:30px; }
+.timeline::before { content:''; position:absolute; right:10px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--teal-light),var(--teal)); }
+.tl-item { position:relative; margin-bottom:22px; background:white; border-radius:var(--radius-sm); padding:16px 18px; box-shadow:var(--shadow); }
+.tl-item::before { content:''; position:absolute; right:-25px; top:18px; width:14px; height:14px; border-radius:50%; background:var(--teal); border:3px solid white; box-shadow:0 0 0 2px var(--teal); }
+.tl-year { font-size:13px; font-weight:700; color:var(--teal); margin-bottom:4px; }
+.tl-text { font-size:14px; font-weight:600; }
+.tl-sub { font-size:13px; color:var(--text-soft); margin-top:2px; }
 
-/* Nav buttons */
-.nav-btn-el{padding:.45rem .95rem;border-radius:50px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:.8rem;background:rgba(255,255,255,.05);color:#94a3b8}
-.nav-btn-el.active{background:linear-gradient(135deg,#00d4ff,#7c3aed);color:#fff;box-shadow:0 0 15px rgba(0,212,255,.35)}
+/* REC CARD */
+.rec-card { background:white; border-radius:var(--radius); padding:22px; margin-bottom:14px; box-shadow:var(--shadow); display:flex; gap:16px; align-items:flex-start; transition:transform .2s,box-shadow .2s; cursor:default; }
+.rec-card:hover { transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,0.1); }
+.rec-num-badge { width:40px; height:40px; border-radius:12px; font-size:18px; font-weight:900; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:white; }
+.bg-teal{background:var(--teal);} .bg-orange{background:var(--orange);} .bg-blue{background:var(--blue);}
+.bg-yellow{background:var(--yellow);} .bg-green{background:var(--green-ok);} .bg-purple{background:#8e24aa;}
+.bg-red{background:var(--red);} .bg-dark{background:#37474f;}
+.rec-title { font-size:16px; font-weight:800; margin-bottom:5px; }
+.rec-body { font-size:14px; color:var(--text-soft); line-height:1.7; }
 
-/* Quick stat pill */
-.pill{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.5rem .9rem}
+/* QUIZ */
+.quiz-card { background:linear-gradient(135deg,#1e88e5,#1565c0); color:white; border-radius:var(--radius); padding:28px 24px; margin-bottom:16px; box-shadow:0 8px 30px rgba(30,136,229,.3); }
+.quiz-q { font-size:18px; font-weight:800; margin-bottom:18px; }
+.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-opt { background:rgba(255,255,255,.15); border:2px solid rgba(255,255,255,.3); color:white; padding:12px 18px; border-radius:12px; cursor:pointer; font-family:'Tajawal',sans-serif; font-size:15px; font-weight:500; text-align:right; transition:all .2s; }
+.quiz-opt:hover { background:rgba(255,255,255,.25); }
+.quiz-opt.correct { background:rgba(67,160,71,.7); border-color:#81c784; }
+.quiz-opt.wrong { background:rgba(229,57,53,.5); border-color:#ef9a9a; }
+.quiz-feedback { margin-top:14px; font-size:15px; font-weight:600; display:none; }
+.quiz-feedback.show { display:block; }
 
-/* Section icon badge */
-.sec-badge{border-radius:14px;padding:.9rem 1rem;flex-shrink:0;text-align:center;min-width:58px}
+/* SUMMARY */
+.summary-box { background:linear-gradient(135deg,#fff8e1,#fff3cd); border:2px solid var(--yellow); border-radius:var(--radius); padding:26px 24px; margin-top:40px; box-shadow:var(--shadow); }
+.summary-box h3 { font-size:20px; font-weight:900; color:#e65100; margin-bottom:12px; }
+.summary-box ul { list-style:none; }
+.summary-box li { padding:6px 0; font-size:15px; display:flex; gap:8px; align-items:flex-start; }
+.summary-box li::before { content:'✓'; color:var(--teal); font-weight:900; flex-shrink:0; margin-top:2px; }
 
-/* Gradient buttons */
-.gbtn{border:none;border-radius:50px;padding:.65rem 1.4rem;color:#fff;font-family:'Cairo',sans-serif;font-weight:700;cursor:pointer;font-size:.88rem;transition:all .3s}
+/* SOURCES TABLE */
+.sources-section { background:white; border-radius:var(--radius); padding:24px 22px; margin-top:30px; box-shadow:var(--shadow); }
+.sources-title { font-size:17px; font-weight:800; color:var(--text); margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+.source-row { display:flex; gap:10px; padding:10px 0; border-bottom:1px solid #f0f4f8; align-items:flex-start; }
+.source-row:last-child { border-bottom:none; }
+.src-num { width:24px; height:24px; background:var(--teal-light); color:var(--teal-dark); border-radius:50%; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+.src-info { flex:1; }
+.src-name { font-size:14px; font-weight:700; color:var(--text); }
+.src-detail { font-size:12px; color:var(--text-soft); margin-top:2px; }
+.src-year { display:inline-block; background:#e3f2fd; color:#1565c0; font-size:11px; padding:2px 8px; border-radius:50px; font-weight:700; }
 
-/* Source card top border */
-.src-card{position:relative;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1.5rem;overflow:hidden;transition:all .3s}
-.src-card:hover{transform:translateY(-4px)}
-.src-top{position:absolute;top:0;left:0;right:0;height:3px}
+/* ALERT BOX */
+.alert-box { background:#fff3e0; border:1px solid #ffcc80; border-radius:var(--radius-sm); padding:16px 18px; margin-bottom:16px; display:flex; gap:12px; align-items:flex-start; font-size:14px; color:#bf360c; }
 
-/* Quiz */
-.quiz-opt{border-radius:12px;padding:.8rem 1rem;font-family:'Cairo',sans-serif;font-size:.88rem;text-align:right;cursor:pointer;transition:all .3s;width:100%;margin-bottom:.55rem;border:1.5px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#e2e8f0}
-.quiz-opt:hover{border-color:rgba(0,212,255,.4)}
-.quiz-opt.correct{background:rgba(16,185,129,.18);border-color:#10b981}
-.quiz-opt.wrong{background:rgba(239,68,68,.18);border-color:#ef4444}
-.quiz-opt.disabled{cursor:default}
-.progress-bar{height:4px;border-radius:50px;background:rgba(255,255,255,.1);flex:1}
-.progress-bar.done{background:#00d4ff}
-.progress-bar.current{background:#f59e0b}
+/* FOOTER */
+.footer { background:#263238; color:rgba(255,255,255,.45); text-align:center; padding:26px 20px; font-size:12px; line-height:2; }
 
-/* Counter cards */
-.counter-card{border-radius:18px;padding:1.5rem;color:#fff;transition:all .3s}
-.counter-card:hover{transform:translateY(-4px);filter:brightness(1.05)}
-
-/* Sector tabs */
-.sec-tab{padding:.5rem 1.1rem;border-radius:50px;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:.83rem;transition:all .3s;border:1.5px solid rgba(255,255,255,.1);background:transparent;color:#94a3b8}
-
-/* Input */
-.stat-input{width:100%;background:rgba(255,255,255,.05);border-radius:10px;padding:.65rem;color:#fff;font-family:'Cairo',sans-serif;font-size:1.1rem;font-weight:700;outline:none}
-
-/* Benefit card */
-.benefit-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:1.5rem;cursor:pointer;transition:all .3s}
-.benefit-card:hover{transform:translateY(-4px)}
-.benefit-card.open{background:rgba(0,212,255,.06);border-color:#00d4ff}
-
-/* Responsive */
-@media(max-width:640px){
-  .grid-sectors{grid-template-columns:1fr!important}
-  .pyramid-wrap{padding:.5rem}
-  .pyr-label{width:32px;font-size:.58rem}
+@media(max-width:500px){
+  .fact-card,.rec-card{ flex-direction:column; gap:8px; }
+  .fc-num { font-size:28px; }
+  .vstep { flex-direction:column; text-align:center; }
+  .compare-label { width:80px; font-size:12px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ─── خلفية ─── -->
-<div class="bg-fixed">
-  <div class="bg-grid"></div>
-  <div class="bg-dots"></div>
-  <div class="blob1" style="position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,#7c3aed,transparent 70%);opacity:.12"></div>
-  <div class="blob2" style="position:absolute;bottom:-80px;left:-80px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,#00d4ff,transparent 70%);opacity:.09"></div>
-  <div class="blob3" style="position:absolute;top:50%;left:50%;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,#f59e0b,transparent 70%);opacity:.05"></div>
-  <div class="bg-line1"></div>
-  <div class="bg-line2"></div>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-flag">🇸🇦</div>
+  <h1>صحة المجتمع السعودي:<br>أين نحن وإلى أين نتجه؟</h1>
+  <p>أرقام تخصّنا جميعاً — واقعنا الصحي وما تعد به رؤية 2030</p>
 </div>
 
-<!-- ─── Header ─── -->
-<header>
-  <div style="margin-bottom:1.2rem;display:flex;justify-content:center">
-    <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#00d4ff" stop-opacity=".15"/><stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/></radialGradient>
-        <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#0284c7"/></linearGradient>
-        <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#5b21b6"/></linearGradient>
-        <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#f59e0b"/><stop offset="1" stop-color="#b45309"/></linearGradient>
-        <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#10b981"/><stop offset="1" stop-color="#059669"/></linearGradient>
-        <linearGradient id="ringG" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00d4ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient>
-      </defs>
-      <circle cx="48" cy="48" r="45" stroke="url(#ringG)" stroke-width="1.2" stroke-dasharray="5 4" fill="none" opacity=".45" style="transform-origin:48px 48px;animation:ringRotate 20s linear infinite"/>
-      <circle cx="48" cy="48" r="38" stroke="rgba(124,58,237,.25)" stroke-width="1" stroke-dasharray="3 5" fill="none" style="transform-origin:48px 48px;animation:ringRotateR 14s linear infinite"/>
-      <circle cx="48" cy="48" r="36" fill="url(#bgGlow)"/>
-      <circle cx="48" cy="48" r="36" fill="rgba(10,14,26,.55)" stroke="rgba(0,212,255,.08)" stroke-width="1"/>
-      <rect x="16" y="55" width="10" height="20" rx="3" fill="url(#g1)"/>
-      <rect x="30" y="42" width="10" height="33" rx="3" fill="url(#g2)"/>
-      <rect x="44" y="31" width="10" height="44" rx="3" fill="url(#g3)"/>
-      <rect x="58" y="46" width="10" height="29" rx="3" fill="url(#g4)"/>
-      <polyline points="21,53 35,40 49,29 63,44 73,24" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".85"/>
-      <circle cx="21" cy="53" r="2.8" fill="#00d4ff"/>
-      <circle cx="35" cy="40" r="2.8" fill="#7c3aed"/>
-      <circle cx="49" cy="29" r="2.8" fill="#f59e0b"/>
-      <circle cx="63" cy="44" r="2.8" fill="#10b981"/>
-      <circle cx="73" cy="24" r="2.8" fill="#00d4ff" style="animation:blink 1.6s ease-in-out infinite"/>
-      <circle cx="73" cy="24" r="5" fill="#00d4ff" opacity=".18" style="animation:ripple 1.6s ease-out infinite"/>
-    </svg>
+<div class="wrap">
+
+  <!-- INTRO -->
+  <div class="intro-q" style="margin-top:36px;">
+    <div class="big">🤔 ليش يهم يعدّون الناس؟</div>
+    <p>لما الحكومة تعرف كم عدد الناس، وين يعيشون، وكم عمرهم — تقدر تبني المستشفيات الصح، وتوجّه الأدوية للناس اللي تحتاجها، وتخطط للمستقبل. الإحصاء السكاني = خارطة طريق الصحة.</p>
   </div>
-  <h1>الإحصاء السكاني<br/>بوصلة التنمية</h1>
-  <p class="sub-text">كل قرار يُبنى على بيانات. كل مدرسة، مستشفى، وطريق — بدأت برقم إحصائي دقيق.<br/>اكتشف كيف يُشكّل علم الإحصاء السكاني حياتنا اليومية.</p>
-  <div style="display:flex;justify-content:center;gap:.5rem;flex-wrap:wrap;margin-top:1.5rem">
-    <button class="gbtn" style="background:linear-gradient(135deg,#00d4ff,#7c3aed)" onclick="go('counters')">الأرقام</button>
-    <button class="gbtn" style="background:linear-gradient(135deg,#7c3aed,#f59e0b)" onclick="go('sectors')">القطاعات</button>
-    <button class="gbtn" style="background:linear-gradient(135deg,#10b981,#00d4ff)" onclick="go('quiz')">الاختبار</button>
+
+  <!-- ─── SECTION 1 ─── -->
+  <div class="sec-header">
+    <div class="sec-icon teal">👥</div>
+    <div class="sec-title">من نحن؟ أرقام محدّثة 2024</div>
+    <div class="sec-line"></div>
   </div>
-</header>
 
-<!-- ─── Nav ─── -->
-<nav class="main-nav">
-  <div class="nav-inner" id="navInner"></div>
-</nav>
+  <div class="fact-card teal">
+    <div class="fc-emoji">🇸🇦</div>
+    <div class="fc-body">
+      <div class="fc-num teal">35.3 مليون</div>
+      <div class="fc-label">إجمالي سكان المملكة منتصف 2024</div>
+      <div class="fc-explain">منهم 19.6 مليون سعودي (55.6%) و15.7 مليون مقيم غير سعودي. المملكة زادت 1.6 مليون شخص في سنة واحدة فقط!</div>
+      <div class="fc-source">الهيئة العامة للإحصاء (GASTAT) — تقرير تقديرات السكان 2024</div>
+    </div>
+  </div>
 
-<!-- ─── Main ─── -->
-<main id="mainContent"></main>
+  <div class="fact-card blue">
+    <div class="fc-emoji">📈</div>
+    <div class="fc-body">
+      <div class="fc-num blue">4.7%</div>
+      <div class="fc-label">معدل النمو السكاني الإجمالي 2024</div>
+      <div class="fc-explain">نمو السعوديين فقط 2% سنوياً، بينما الزيادة الكبيرة جاءت من العمالة الوافدة التي ارتفعت 8.3%. هذا يؤثر مباشرة على احتياجات الخدمات الصحية.</div>
+      <div class="fc-source">الهيئة العامة للإحصاء (GASTAT) 2024</div>
+    </div>
+  </div>
 
-<!-- ─── Footer ─── -->
-<footer>
-  <div style="font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:900;background:linear-gradient(135deg,#00d4ff,#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem">📊 عالم الإحصاء السكاني</div>
-  <p style="color:#94a3b8;font-size:.85rem;margin-bottom:.4rem">الإحصاء ليس مجرد أرقام — إنه قصة البشرية في تطورها المستمر</p>
-  <p style="color:#475569;font-size:.75rem">الأمم المتحدة 2025 • البنك الدولي 2024 • UNESCO • GASTAT 2024</p>
-  <div id="footerLinks" style="display:flex;justify-content:center;gap:.4rem;flex-wrap:wrap;margin-top:1rem"></div>
-</footer>
+  <div class="fact-card orange">
+    <div class="fc-emoji">👶</div>
+    <div class="fc-body">
+      <div class="fc-num orange">74.7%</div>
+      <div class="fc-label">نسبة من هم بين 15 و64 سنة (الشريحة المنتجة)</div>
+      <div class="fc-explain">أكثر من ثلاثة أرباع السكان في سن العمل — فرصة اقتصادية كبيرة تستوجب الاستثمار في صحتهم الوقائية اليوم.</div>
+      <div class="fc-source">GASTAT — تقديرات السكان 2024 (argaam.com)</div>
+    </div>
+  </div>
+
+  <div class="fact-card yellow">
+    <div class="fc-emoji">👴</div>
+    <div class="fc-body">
+      <div class="fc-num yellow">2.8%</div>
+      <div class="fc-label">نسبة كبار السن (65+) — حوالي 988 ألف شخص</div>
+      <div class="fc-explain">النسبة صغيرة الآن، لكنها في تصاعد مستمر. كل زيادة تعني ضغطاً أكبر على خدمات الرعاية المزمنة والمستشفيات.</div>
+      <div class="fc-source">GASTAT — تقديرات السكان 2024</div>
+    </div>
+  </div>
+
+  <!-- People visual -->
+  <div class="scale-card">
+    <div class="scale-title">🔎 من كل 10 أشخاص في المملكة...</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:28px;margin-bottom:10px;">
+      <span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span><span title="سعودي">🧑</span>
+      <span title="مقيم غير سعودي" style="opacity:.45;">👤</span><span title="مقيم غير سعودي" style="opacity:.45;">👤</span><span title="مقيم غير سعودي" style="opacity:.45;">👤</span><span title="مقيم غير سعودي" style="opacity:.45;">👤</span>
+    </div>
+    <div class="scale-label" style="font-weight:700;color:var(--teal);">6 سعوديين + 4 مقيمين = 10 يحتاجون خدمات صحية</div>
+    <div class="scale-label">منظومة الصحة تخدم الجميع بغض النظر عن الجنسية</div>
+  </div>
+
+  <!-- ─── SECTION 2: HEALTH ─── -->
+  <div class="sec-header">
+    <div class="sec-icon orange">🩺</div>
+    <div class="sec-title">صحتنا — الواقع بدون تجميل</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="story-card">
+    <div class="story-q">ليش السكري عندنا أكثر من العالم؟</div>
+    <div class="story-a">واحد من كل 4 سعوديين (20-79 سنة) مصاب بالسكري — المملكة في العشرة الأولى عالمياً، والثانية على مستوى الشرق الأوسط بعد الكويت. الأكل كثير السكر والدهون، وقلة الحركة، والوراثة كلها عوامل مجتمعة. ومن المتوقع أن يصل عدد المصابين 8.4 مليون بحلول 2030 ما لم تتغير الأنماط!</div>
+    <div class="story-src">📌 المصدر: Frontiers in Clinical Diabetes — ديسمبر 2024 | World Bank 2024</div>
+  </div>
+
+  <div class="fact-card red">
+    <div class="fc-emoji">🩸</div>
+    <div class="fc-body">
+      <div class="fc-num red">23.1%</div>
+      <div class="fc-label">معدل الإصابة بالسكري لدى البالغين (20-79 سنة)</div>
+      <div class="fc-explain">هذا يعني 2.5 ضعف المعدل العالمي (9%). دراسة 2024 من جامعة حائل وجدت معدل 27% في العينة المدروسة — مؤشر خطير.</div>
+      <div class="fc-source">World Bank Health Indicators 2024 | PMC — University of Hail Study 2024</div>
+    </div>
+  </div>
+
+  <!-- Comparison bar -->
+  <div class="compare-card">
+    <div class="compare-title">📊 مقارنة معدل السكري — نحن والعالم</div>
+    <div class="compare-row">
+      <div class="compare-label">🇸🇦 المملكة</div>
+      <div class="compare-bar-wrap"><div class="compare-fill" data-w="90%" style="background:linear-gradient(90deg,#e53935,#ef5350);">23.1%</div></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-label">🌍 عالمياً</div>
+      <div class="compare-bar-wrap"><div class="compare-fill" data-w="34%" style="background:linear-gradient(90deg,#1e88e5,#42a5f5);">9%</div></div>
+    </div>
+    <div class="compare-note">📌 World Bank 2024 + IDF Atlas</div>
+  </div>
+
+  <!-- Obesity -->
+  <div class="fact-card orange">
+    <div class="fc-emoji">⚖️</div>
+    <div class="fc-body">
+      <div class="fc-num orange">1 من كل 4</div>
+      <div class="fc-label">بالغ سعودي يعاني من السمنة (BMI ≥30)</div>
+      <div class="fc-explain">دراسة 2014 على 10,735 شخصاً وجدت 28.7% سمنة — النساء أعلى (33.5%) مقابل الرجال (24.1%). الاتجاه التصاعدي مستمر منذ التسعينيات.</div>
+      <div class="fc-source">WHO EMRO 2023 | PMC Systematic Review 2024 (Saudi Pharmaceutical Journal)</div>
+    </div>
+  </div>
+
+  <div class="fact-card purple">
+    <div class="fc-emoji">💸</div>
+    <div class="fc-body">
+      <div class="fc-num purple">19.6 مليار$</div>
+      <div class="fc-label">التكلفة الاقتصادية السنوية للسمنة والزيادة في الوزن</div>
+      <div class="fc-explain">هذا يعادل 572 دولار لكل شخص في المملكة و2.4% من الناتج المحلي. ومتوقع أن يرتفع لـ 150 مليار دولار بحلول 2060 إذا استمر الوضع!</div>
+      <div class="fc-source">World Obesity Federation 2023 — استشهدت به دراسة PMC 2024</div>
+    </div>
+  </div>
+
+  <!-- Scale visual obesity -->
+  <div class="scale-card">
+    <div class="scale-title">⚖️ من كل 4 بالغين سعوديين...</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:28px;margin-bottom:10px;">
+      <span title="يعاني من السمنة">🔴</span>
+      <span style="opacity:.25;">⚪</span><span style="opacity:.25;">⚪</span><span style="opacity:.25;">⚪</span>
+    </div>
+    <div class="scale-label" style="font-weight:700;color:var(--orange);">1 منهم يعاني من السمنة</div>
+    <div class="scale-label">السمنة ليست مجرد مشكلة مظهر — هي بوابة للسكري وضغط الدم وأمراض القلب</div>
+  </div>
+
+  <!-- Life expectancy -->
+  <div class="fact-card green">
+    <div class="fc-emoji">🎂</div>
+    <div class="fc-body">
+      <div class="fc-num green">77.6 سنة</div>
+      <div class="fc-label">متوسط العمر المتوقع في المملكة — 2024</div>
+      <div class="fc-explain">تحسّن حقيقي ومستمر! وصلنا 77.6 سنة بحسب تقرير "التحول الصحي" الرسمي 2024. لكن هدف رؤية 2030 هو 80 سنة — لا يزال أمامنا شوط.</div>
+      <div class="fc-source">وكالة الأنباء السعودية (SPA) — تقرير "التحول الصحي" 2024</div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="sec-header" style="margin-top:30px;margin-bottom:16px;">
+    <div class="sec-icon teal">📅</div>
+    <div class="sec-title">رحلة متوسط العمر عبر الزمن</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-year">1970</div>
+      <div class="tl-text">~64 سنة</div>
+      <div class="tl-sub">قبل التوسع الكبير في البنية الصحية</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2000</div>
+      <div class="tl-text">~72 سنة</div>
+      <div class="tl-sub">بعد انتشار المستشفيات والرعاية الأولية في كل المناطق</div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-year">2024</div>
+      <div class="tl-text">77.6 سنة</div>
+      <div class="tl-sub">تحسين خدمات الطوارئ والأدوية وبرامج التحول الصحي</div>
+    </div>
+    <div class="tl-item" style="border:2px dashed var(--teal);background:var(--teal-light);">
+      <div class="tl-year" style="color:var(--orange);">🎯 هدف 2030</div>
+      <div class="tl-text" style="color:var(--teal-dark);">80 سنة</div>
+      <div class="tl-sub">يحتاج تسريع في مكافحة السمنة والسكري وأمراض القلب</div>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    <span style="font-size:20px;flex-shrink:0;">⚠️</span>
+    <div>بحث WHO 2018 يُشير إلى أن الوصول لهدف 80 سنة صعب جداً ما لم تُعالج المملكة ثلاثة تحديات رئيسية: التدخين، السمنة، وقلة النشاط البدني — وهي محاور رؤية 2030 الصحية تحديداً.</div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-card">
+    <div class="quiz-q">❓ اختبر نفسك — كم تبلغ نسبة السكري لدى البالغين في المملكة؟</div>
+    <div class="quiz-options">
+      <button class="quiz-opt" onclick="answer(this,false)">حوالي 10%</button>
+      <button class="quiz-opt" onclick="answer(this,true)">حوالي 23%</button>
+      <button class="quiz-opt" onclick="answer(this,false)">حوالي 5%</button>
+    </div>
+    <div class="quiz-feedback" id="qfeedback"></div>
+  </div>
+
+  <!-- ─── SECTION 3: VISION 2030 ─── -->
+  <div class="sec-header">
+    <div class="sec-icon blue">🎯</div>
+    <div class="sec-title">ماذا تعد رؤية 2030 للصحة؟</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="story-card" style="background:linear-gradient(135deg,#0d47a1,#1565c0);">
+    <div class="story-q">الفكرة الكبيرة 💡</div>
+    <div class="story-a">رؤية 2030 تقول: "بدل ما ننتظر الناس يمرضون ثم نعالجهم، نساعدهم يبقوا أصحاء من البداية." وتهدف أيضاً لخفض معدل الوفيات المبكرة من الأمراض المزمنة بتخفيض "SMR" من 510 إلى 324 لكل 100 ألف بحلول 2030.</div>
+    <div class="story-src">📌 Journal of Epidemiology and Global Health — مارس 2025</div>
+  </div>
+
+  <div class="vision-steps">
+    <div class="vstep">
+      <div class="vstep-icon">❤️</div>
+      <div class="vstep-content">
+        <div class="vstep-title">رفع متوسط العمر لـ 80 سنة</div>
+        <div class="vstep-desc">وصلنا 77.6 سنة في 2024 — تقدم جيد لكن يحتاج تسريعاً. المفتاح: مكافحة السمنة والتدخين وتحسين جودة الرعاية الأولية.</div>
+        <span class="vstep-tag">📈 77.6 → 80 سنة</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">🥤</div>
+      <div class="vstep-content">
+        <div class="vstep-title">الحرب على السكر والسمنة</div>
+        <div class="vstep-desc">ضريبة 50% على الغازيات و100% على مشروبات الطاقة (2017) أسفرت عن تراجع 35% في مبيعات المشروبات الغازية. هدف 2030: تخفيض السمنة 3% والسكري 10%.</div>
+        <span class="vstep-tag">🎯 Brookings 2022</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">🏥</div>
+      <div class="vstep-content">
+        <div class="vstep-title">مراكز صحية أقرب للناس</div>
+        <div class="vstep-desc">نموذج الرعاية الجديد يُقدّم الوقاية على العلاج — المستشفيات تتحول لمراكز تخصصية بينما تتوسع عيادات الرعاية الأولية في كل حي.</div>
+        <span class="vstep-tag">🏡 الرعاية قريبة منك</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">🎗️</div>
+      <div class="vstep-content">
+        <div class="vstep-title">خطة "324" للأمراض المزمنة</div>
+        <div class="vstep-desc">هدف تقليص وفيات الأمراض المزمنة (السكري، السرطان، القلب) من 510 إلى 324 وفاة لكل 100 ألف — بالفحص المبكر والعلاج المنتظم وتغيير نمط الحياة.</div>
+        <span class="vstep-tag">📋 324 خطة وطنية</span>
+      </div>
+    </div>
+
+    <div class="vstep">
+      <div class="vstep-icon">📱</div>
+      <div class="vstep-content">
+        <div class="vstep-title">الصحة الرقمية في يدك</div>
+        <div class="vstep-desc">ملفك الطبي موحّد ومتاح لأي طبيب، استشارات عن بُعد، وتطبيقات متابعة صحتك اليومية. المملكة تتصدر المنطقة في التحول الرقمي الصحي.</div>
+        <span class="vstep-tag">📲 الطب عن بُعد</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 4: RECOMMENDATIONS ─── -->
+  <div class="sec-header">
+    <div class="sec-icon purple">💡</div>
+    <div class="sec-title">ماذا نقترح؟</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-teal">1</div>
+    <div>
+      <div class="rec-title">🔗 اربط تعداد السكان بتوزيع المستشفيات</div>
+      <div class="rec-body">بيانات 2024 تُظهر أن 80% من السكان يتركزون في 10 مدن كبرى. هذا يعني: التوسع السريع في الخدمات الصحية بهذه المدن أولاً، ثم ردم الفجوة مع المناطق النائية عبر الطب عن بُعد.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-orange">2</div>
+    <div>
+      <div class="rec-title">⏰ التحرك الآن قبل أن يتضاعف كبار السن</div>
+      <div class="rec-body">نسبة كبار السن 2.8% اليوم — لكنها ستتضاعف مع تقدم الجيل الحالي في السن. بناء منظومة رعاية مسنين متكاملة اليوم أوفر بكثير من الانتظار حتى تصبح الأزمة حرجة.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-red">3</div>
+    <div>
+      <div class="rec-title">🥗 حوّل المدارس إلى محطات صحية</div>
+      <div class="rec-body">22.5% من سكان المملكة أعمارهم بين 0 و14 سنة. وجبات مدرسية صحية، حصص رياضية يومية حقيقية، وتثقيف غذائي منذ الصغر = استثمار بمليارات الريالات في صحة المستقبل.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-blue">4</div>
+    <div>
+      <div class="rec-title">👩 برامج صحية مخصصة للمرأة</div>
+      <div class="rec-body">معدل السمنة لدى النساء (33.5%) أعلى من الرجال (24.1%). برامج متخصصة لمرحلة الحمل وما بعد الأربعين يمكنها تقليص هذه الفجوة وإنقاذ آلاف الأسر من عبء المرض.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-yellow">5</div>
+    <div>
+      <div class="rec-title">🚶 حوّل بيئات العمل لتشجع الحركة</div>
+      <div class="rec-body">74.7% من السكان في سن العمل — أغلبهم يقضون ساعات طويلة جالسين. سياسات مؤسسية بسيطة (استراحات حركة، مواقف دراجات، سلالم أمام المصعد) تقلل السمنة وتزيد الإنتاجية معاً.</div>
+    </div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num-badge bg-green">6</div>
+    <div>
+      <div class="rec-title">📊 استخدم بيانات التعداد لتتبع الفجوات الصحية</div>
+      <div class="rec-body">التعداد السكاني يكشف مناطق "صحياً مُهملة". تحديث خرائط توزيع الخدمات الصحية كل 3 سنوات بناءً على نمو السكان ضروري لضمان العدالة الصحية لكل مواطن.</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <h3>🌟 ما الذي نستخلصه؟</h3>
+    <ul>
+      <li>35.3 مليون نسمة (2024) مجتمع متنوع يحتاج خدمات صحية متكاملة</li>
+      <li>السكري (23.1%) والسمنة (1 من كل 4) تحديان يمكن التغلب عليهما بالوعي والسياسات</li>
+      <li>متوسط العمر وصل 77.6 سنة — تقدم حقيقي لكن هدف 80 يحتاج جهداً أكبر</li>
+      <li>رؤية 2030 على الطريق الصح والأرقام تتحسن لكن التسريع ضروري</li>
+      <li>كل فرد يقدر يساهم: تغذية أفضل، حركة يومية، فحوصات دورية</li>
+    </ul>
+  </div>
+
+  <!-- SOURCES -->
+  <div class="sources-section">
+    <div class="sources-title">📚 مصادر البيانات الموثّقة</div>
+
+    <div class="source-row">
+      <div class="src-num">1</div>
+      <div class="src-info">
+        <div class="src-name">الهيئة العامة للإحصاء (GASTAT)</div>
+        <div class="src-detail">تقرير تقديرات السكان 2024 — إجمالي السكان، التركيبة العمرية، معدلات النمو <span class="src-year">2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">2</div>
+      <div class="src-info">
+        <div class="src-name">World Bank Health Indicators</div>
+        <div class="src-detail">Diabetes prevalence (% of population ages 20-79) — Saudi Arabia: 23.1% <span class="src-year">2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">3</div>
+      <div class="src-info">
+        <div class="src-name">Frontiers in Clinical Diabetes & Healthcare</div>
+        <div class="src-detail">AL-Rasheedi et al. — Status of diabetes mellitus in different regions of KSA (2024) <span class="src-year">ديسمبر 2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">4</div>
+      <div class="src-info">
+        <div class="src-name">PMC / Saudi Pharmaceutical Journal</div>
+        <div class="src-detail">Al-Omar et al. — A systematic review of obesity burden in Saudi Arabia (2024) <span class="src-year">أكتوبر 2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">5</div>
+      <div class="src-info">
+        <div class="src-name">WHO EMRO</div>
+        <div class="src-detail">Epidemiology of obesity and control interventions in Saudi Arabia <span class="src-year">2023</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">6</div>
+      <div class="src-info">
+        <div class="src-name">وكالة الأنباء السعودية (SPA)</div>
+        <div class="src-detail">تقرير "التحول الصحي" — متوسط العمر 77.6 سنة <span class="src-year">2024</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">7</div>
+      <div class="src-info">
+        <div class="src-name">Brookings Institution</div>
+        <div class="src-detail">Countdown to 2030: Addressing the stubborn obesity challenge in Saudi Arabia — مستهدفات رؤية 2030 الصحية <span class="src-year">2022</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">8</div>
+      <div class="src-info">
+        <div class="src-name">Journal of Epidemiology and Global Health</div>
+        <div class="src-detail">Saudi Arabia's Mid-Journey Progress: SDGs and Vision 2030 Health — خطة 324 <span class="src-year">مارس 2025</span></div>
+      </div>
+    </div>
+
+    <div class="source-row">
+      <div class="src-num">9</div>
+      <div class="src-info">
+        <div class="src-name">World Obesity Federation</div>
+        <div class="src-detail">World Obesity Atlas 2023 — التكلفة الاقتصادية للسمنة في المملكة <span class="src-year">2023</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<div class="footer">
+  جميع الأرقام مستخلصة من المصادر الرسمية والدراسات العلمية المحكّمة المذكورة أعلاه<br>
+  آخر تحديث للبيانات: 2024–2025 · الصفحة للتوعية العامة والأغراض التعليمية
+</div>
 
 <script>
-// ═══════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════
-const C = { a1:'#00d4ff', a2:'#7c3aed', a3:'#f59e0b', a4:'#10b981', a5:'#ef4444' };
-
-const navItems = [
-  { id:'visitor', l:'📋 ملخص', short:'ملخص' },
-  { id:'intro',   l:'📖 الإحصاء', short:'الإحصاء' },
-  { id:'counters',l:'🔢 الأرقام', short:'الأرقام' },
-  { id:'sectors', l:'🏗️ القطاعات', short:'القطاعات' },
-  { id:'benefits',l:'💡 لماذا مهم', short:'لماذا مهم' },
-  { id:'concepts',l:'📐 النسبة والمعدل', short:'النسبة' },
-  { id:'interactive',l:'⚡ تفاعلي', short:'تفاعلي' },
-  { id:'pyramid', l:'🔺 الهرم', short:'الهرم' },
-  { id:'history', l:'📜 التاريخ', short:'التاريخ' },
-  { id:'sources', l:'📚 المصادر', short:'المصادر' },
-  { id:'quiz',    l:'🎯 الاختبار', short:'الاختبار' },
-];
-
-const quizData = [
-  { q:'ما هو الهدف الرئيسي من التعداد السكاني؟', opts:['جمع الضرائب فقط','توزيع الموارد وتخطيط الخدمات بعدالة','قياس الثروة الوطنية','تحديد الحدود الجغرافية'], c:1, f:'✅ التعداد يُمكّن الحكومات من توزيع المستشفيات والمدارس والطرق بشكل عادل.' },
-  { q:'إذا كان 40% من سكان مدينة أطفال دون 15 عاماً، ما الأولوية؟', opts:['بناء دور رعاية المسنين','الاستثمار في التعليم ورياض الأطفال','مشاريع التقاعد','بناء مراكز الأعمال'], c:1, f:'✅ نسبة عالية من الأطفال تعني طلباً مستقبلياً كبيراً على التعليم وسوق العمل.' },
-  { q:"ما معنى 'العائد الديموغرافي'؟", opts:['زيادة المسنّين','فترة يكون فيها العاملون أكثر من المعالين','انخفاض الولادات','ارتفاع البطالة'], c:1, f:"✅ هو 'نافذة فرصة' استغلتها دول جنوب شرق آسيا لنمو اقتصادي كبير." },
-  { q:'أي مؤشر لا يستخدمه علماء السكان؟', opts:['معدل الخصوبة','متوسط العمر المتوقع','سعر صرف العملة','معدل الهجرة'], c:2, f:'✅ سعر الصرف مؤشر اقتصادي وليس ديموغرافياً.' },
-  { q:'ما مخاطر إهمال الإحصاء في التخطيط للمدن؟', opts:['لا توجد مخاطر','بنية تحتية زائدة','أزمات مياه وكهرباء وأحياء عشوائية','انخفاض التكاليف'], c:2, f:'✅ بدون إحصاء دقيق تتراكم أزمات الخدمات وتكلّف إصلاحها أضعاف التخطيط.' },
-];
-
-const pyramidData = [
-  {age:'75+',m:.5,f:.7},{age:'70-74',m:.6,f:.7},{age:'65-69',m:.9,f:.9},{age:'60-64',m:2.5,f:1.5},
-  {age:'55-59',m:4.5,f:2.2},{age:'50-54',m:6.8,f:3.0},{age:'45-49',m:8.5,f:3.5},{age:'40-44',m:9.2,f:4.0},
-  {age:'35-39',m:9.8,f:4.5},{age:'30-34',m:9.5,f:4.5},{age:'25-29',m:8.0,f:4.8},{age:'20-24',m:5.5,f:4.5},
-  {age:'15-19',m:4.5,f:4.3},{age:'10-14',m:4.5,f:4.3},{age:'5-9',m:4.2,f:4.0},{age:'0-4',m:3.8,f:3.6},
-];
-
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
-let currentPage = 'visitor';
-let currentSector = 'health';
-let openBenefit = -1;
-let pop2020 = 1000, pop2025 = 1200, cityPop = 50000;
-let qIdx = 0, score = 0, answered = false, selectedAns = -1, quizDone = false;
-let activeCharts = {};
-
-function destroyCharts() {
-  Object.values(activeCharts).forEach(c => { try{ c.destroy(); }catch(e){} });
-  activeCharts = {};
-}
-
-// ═══════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════
-function buildNav() {
-  const inner = document.getElementById('navInner');
-  const footer = document.getElementById('footerLinks');
-  inner.innerHTML = navItems.map(n => `
-    <button class="nav-btn-el ${n.id===currentPage?'active':''}" onclick="go('${n.id}')">${n.l}</button>
-  `).join('');
-  footer.innerHTML = navItems.map(n => `
-    <button onclick="go('${n.id}')" style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:.3rem .8rem;color:#64748b;cursor:pointer;font-size:.75rem;font-family:Cairo,sans-serif">${n.short}</button>
-  `).join('');
-}
-
-function go(id) {
-  destroyCharts();
-  currentPage = id;
-  buildNav();
-  render();
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-// ═══════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════
-const sbar = (v, c) => `<div class="bar-track"><div class="bar-fill" style="width:${v}%;background:linear-gradient(90deg,${c},#7c3aed)"></div></div>`;
-const card = (content, extra='') => `<div class="card ${extra}">${content}</div>`;
-const tag = t => `<span class="tag">${t}</span>`;
-const h2 = t => `<div class="h2">${t}</div>`;
-const muted = t => `<p class="muted">${t}</p>`;
-const badge = (emoji, num, grad) => `<div class="sec-badge" style="background:${grad}"><div style="font-size:1.5rem">${emoji}</div><div style="color:#fff;font-size:.62rem;font-weight:700;margin-top:.15rem">${num}</div></div>`;
-
-// ═══════════════════════════════════════════
-// PAGES
-// ═══════════════════════════════════════════
-
-function pageVisitor() {
-  return `
-  <div style="display:flex;flex-direction:column;gap:1.4rem">
-    ${tag('ملخص شامل')}
-    ${h2('كل ما تحتاج معرفته عن الإحصاء السكاني')}
-    ${muted('بدون تعقيد — 7 أسئلة يسألها أي مواطن')}
-
-    <!-- 1 -->
-    ${card(`<div style="display:flex;gap:1rem;align-items:flex-start">
-      ${badge('👥','١',`linear-gradient(135deg,${C.a1},#0284c7)`)}
-      <div>
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">كم عدد السكان؟</h3>
-        <p class="muted">المملكة العربية السعودية يسكنها <strong style="color:${C.a1}">35.3 مليون شخص</strong> (2024). هذا الرقم يشمل السعوديين والمقيمين من جنسيات مختلفة.</p>
-        <div style="display:flex;gap:.7rem;margin-top:.8rem;flex-wrap:wrap">
-          <div class="pill"><div style="font-size:.73rem;color:#94a3b8">🇸🇦 سعوديون</div><div style="color:${C.a1};font-weight:700">~18 مليون</div></div>
-          <div class="pill"><div style="font-size:.73rem;color:#94a3b8">🌍 مقيمون</div><div style="color:${C.a3};font-weight:700">~17 مليون</div></div>
-        </div>
-      </div></div>`, 'card-border-c1')}
-
-    <!-- 2 -->
-    ${card(`<div style="display:flex;gap:1rem;align-items:flex-start">
-      ${badge('📊','٢',`linear-gradient(135deg,${C.a2},#5b21b6)`)}
-      <div style="flex:1">
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">كيف يتوزع السكان حسب العمر؟</h3>
-        <p class="muted" style="margin-bottom:.9rem">معرفة نسبة كل فئة عمرية يساعد الدولة على التخطيط الصحيح لكل قطاع.</p>
-        <div class="grid-3" style="grid-template-columns:repeat(3,1fr)">
-          <div style="background:${C.a1}0d;border:1px solid ${C.a1}25;border-radius:12px;padding:.8rem;text-align:center">
-            <div style="font-size:1.3rem;margin-bottom:.2rem">👶</div>
-            <div style="color:${C.a1};font-weight:900;font-size:1.2rem;font-family:Tajawal,sans-serif">22.5%</div>
-            <div style="color:#94a3b8;font-size:.68rem;margin-top:.2rem">0–14 سنة</div>
-            <div style="color:#64748b;font-size:.63rem;margin-top:.2rem">للتعليم</div>
-          </div>
-          <div style="background:${C.a4}0d;border:1px solid ${C.a4}25;border-radius:12px;padding:.8rem;text-align:center">
-            <div style="font-size:1.3rem;margin-bottom:.2rem">🧑</div>
-            <div style="color:${C.a4};font-weight:900;font-size:1.2rem;font-family:Tajawal,sans-serif">74.7%</div>
-            <div style="color:#94a3b8;font-size:.68rem;margin-top:.2rem">15–64 سنة</div>
-            <div style="color:#64748b;font-size:.63rem;margin-top:.2rem">للعمل والإنتاج</div>
-          </div>
-          <div style="background:${C.a3}0d;border:1px solid ${C.a3}25;border-radius:12px;padding:.8rem;text-align:center">
-            <div style="font-size:1.3rem;margin-bottom:.2rem">👴</div>
-            <div style="color:${C.a3};font-weight:900;font-size:1.2rem;font-family:Tajawal,sans-serif">2.8%</div>
-            <div style="color:#94a3b8;font-size:.68rem;margin-top:.2rem">65+ سنة</div>
-            <div style="color:#64748b;font-size:.63rem;margin-top:.2rem">للصحة والتقاعد</div>
-          </div>
-        </div>
-      </div></div>`, 'card-border-c2')}
-
-    <!-- 3 -->
-    ${card(`<div style="display:flex;gap:1rem;align-items:flex-start">
-      ${badge('📈','٣',`linear-gradient(135deg,${C.a4},#059669)`)}
-      <div>
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">هل عدد السكان يزيد أم ينقص؟</h3>
-        <p class="muted" style="margin-bottom:.9rem">السكان يتغيرون بسبب 3 عوامل رئيسية — وكلها تؤثر على التخطيط المستقبلي.</p>
-        <div style="display:flex;flex-direction:column;gap:.55rem">
-          ${[
-            ['+','👶 المواليد','كل مولود جديد يعني طالب مدرسة مستقبلاً ومريض يحتاج مستشفى',C.a1],
-            ['–','💔 الوفيات','الوفيات تُقلّص عدد السكان وتزيد الحاجة للرعاية الصحية',C.a5],
-            ['↔','✈️ الهجرة','دخول وخروج السكان يؤثر على سوق العمل والخدمات',C.a3],
-          ].map(([sym,t,d,c])=>`
-            <div style="display:flex;gap:.8rem;align-items:center;background:${c}08;border:1px solid ${c}20;border-radius:10px;padding:.7rem 1rem">
-              <div style="color:${c};font-weight:900;font-size:1.3rem;width:22px;text-align:center;flex-shrink:0">${sym}</div>
-              <div><div style="color:#e2e8f0;font-weight:700;font-size:.88rem">${t}</div><div style="color:#94a3b8;font-size:.78rem;line-height:1.6">${d}</div></div>
-            </div>`).join('')}
-        </div>
-      </div></div>`, 'card-border-c4')}
-
-    <!-- 4 -->
-    ${card(`<div style="display:flex;gap:1rem;align-items:flex-start">
-      ${badge('📍','٤',`linear-gradient(135deg,${C.a3},#b45309)`)}
-      <div style="flex:1">
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">أين يتركز السكان؟</h3>
-        <p class="muted" style="margin-bottom:.9rem">أكثر من <strong style="color:${C.a3}">83%</strong> من سكان المملكة يعيشون في المدن.</p>
-        <div style="display:flex;flex-direction:column;gap:.5rem">
-          ${[['🏙️ الرياض','~8 مليون',75],['🌊 جدة','~5 مليون',50],['🕌 مكة المكرمة','~2 مليون',28]].map(([c,p,pct])=>`
-            <div>
-              <div style="display:flex;justify-content:space-between;font-size:.83rem;margin-bottom:4px">
-                <span style="color:#e2e8f0">${c}</span><span style="color:${C.a3};font-weight:700">${p}</span>
-              </div>
-              <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:linear-gradient(90deg,${C.a3},${C.a5})"></div></div>
-            </div>`).join('')}
-        </div>
-      </div></div>`, 'card-border-c3')}
-
-    <!-- 5 -->
-    ${card(`<div style="display:flex;gap:1rem;align-items:flex-start">
-      ${badge('🔢','٥',`linear-gradient(135deg,${C.a1},${C.a2})`)}
-      <div style="flex:1">
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">أهم الأرقام السكانية التي تهمّك</h3>
-        <p class="muted" style="margin-bottom:.9rem">بدون صيغ رياضية — فقط معنى كل رقم في حياتك.</p>
-        <div style="display:flex;flex-direction:column;gap:.7rem">
-          ${[
-            ['2.4%','معدل النمو السكاني','عدد السكان يزيد 2.4% كل سنة — نحتاج مدارس ومستشفيات أكثر باستمرار',C.a1],
-            ['76 عاماً','متوسط العمر المتوقع','يساعد على تخطيط نظام التقاعد والرعاية الصحية للمواطن السعودي',C.a4],
-            ['2.5 طفل','معدل الخصوبة','كل أسرة تنجب 2.5 طفل في المتوسط — يحدد حجم الأجيال القادمة',C.a3],
-          ].map(([num,lbl,exp,c])=>`
-            <div style="background:${c}08;border:1px solid ${c}20;border-radius:12px;padding:.9rem 1.1rem;display:flex;gap:1rem;align-items:flex-start">
-              <div style="color:${c};font-weight:900;font-size:1.25rem;font-family:Tajawal,sans-serif;flex-shrink:0;min-width:70px">${num}</div>
-              <div>
-                <div style="color:#e2e8f0;font-weight:700;font-size:.88rem;margin-bottom:.2rem">${lbl}</div>
-                <div style="color:#94a3b8;font-size:.78rem;line-height:1.7">${exp}</div>
-              </div>
-            </div>`).join('')}
-        </div>
-      </div></div>`, 'card-border-c1')}
-
-    <!-- 6 -->
-    ${card(`<div style="display:flex;gap:1rem;align-items:flex-start">
-      ${badge('🏛️','٦',`linear-gradient(135deg,${C.a4},#059669)`)}
-      <div>
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">من يجمع هذه البيانات؟</h3>
-        <p class="muted">داخل المملكة، الجهة الرسمية المسؤولة عن جمع ونشر الإحصاءات السكانية هي:</p>
-        <div style="background:${C.a4}10;border:1px solid ${C.a4}30;border-radius:14px;padding:1rem 1.2rem;margin-top:.8rem;display:flex;gap:1rem;align-items:center">
-          <div style="font-size:2rem">🇸🇦</div>
-          <div>
-            <div style="color:${C.a4};font-weight:700;font-size:1rem">الهيئة العامة للإحصاء</div>
-            <div style="color:#94a3b8;font-size:.78rem;margin-top:.2rem">GASTAT — تُصدر تقارير رسمية معتمدة دولياً</div>
-            <div style="color:#64748b;font-size:.73rem;margin-top:.2rem">gastat.gov.sa</div>
-          </div>
-        </div>
-      </div></div>`, 'card-border-c4')}
-
-    <!-- 7 -->
-    <div style="background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(0,212,255,.08));border:1px solid rgba(124,58,237,.3);border-radius:20px;padding:1.8rem">
-      <div style="display:flex;gap:1rem;align-items:flex-start">
-        ${badge('🎯','٧',`linear-gradient(135deg,${C.a2},#5b21b6)`)}
-        <div style="flex:1">
-          <h3 style="color:#e2e8f0;font-weight:700;font-size:1.05rem;margin-bottom:.5rem">لماذا هذه الأرقام مهمة لك شخصياً؟</h3>
-          <p class="muted" style="margin-bottom:1rem">هذه الأرقام تُستخدم في قرارات تمس حياتك مباشرة — وترتبط برؤية 2030.</p>
-          <div class="grid-4" style="margin-bottom:1rem">
-            ${[['🏥','المستشفيات','تحديد عدد الأسرّة والأطباء في منطقتك'],['🎓','المدارس','بناء فصول كافية للطلاب في كل حي'],['🏠','الإسكان','تخصيص أراضٍ ووحدات سكنية'],['💼','فرص العمل','تهيئة سوق العمل لأعداد الشباب']].map(([ic,t,d])=>`
-              <div style="background:rgba(255,255,255,.04);border-radius:12px;padding:.8rem;text-align:center">
-                <div style="font-size:1.4rem;margin-bottom:.3rem">${ic}</div>
-                <div style="color:#e2e8f0;font-weight:700;font-size:.82rem;margin-bottom:.2rem">${t}</div>
-                <div style="color:#64748b;font-size:.7rem;line-height:1.6">${d}</div>
-              </div>`).join('')}
-          </div>
-          <div style="background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(124,58,237,.1));border:1px solid rgba(0,212,255,.2);border-radius:12px;padding:.8rem 1.1rem;display:flex;gap:.7rem;align-items:center">
-            <span style="font-size:1.5rem">🚀</span>
-            <p style="color:#94a3b8;font-size:.83rem;line-height:1.8"><strong style="color:#e2e8f0">رؤية 2030 </strong>تعتمد على الإحصاء السكاني لتحقيق أهدافها في التنويع الاقتصادي وتطوير الخدمات وتمكين الشباب السعودي.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-function pageIntro() {
-  return `
-  <div style="display:flex;flex-direction:column;gap:1.5rem">
-    ${tag('المقدمة')}${h2('ما هو الإحصاء السكاني؟')}
-    ${card(`
-      <div style="display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.2rem">
-        <div style="background:linear-gradient(135deg,#f59e0b,#ef4444);border-radius:14px;padding:.8rem;flex-shrink:0;font-size:1.8rem">💡</div>
-        <div>
-          <p class="muted" style="margin-bottom:.8rem">الإحصاء السكاني هو <strong style="color:${C.a1}">عد جميع الناس</strong> الذين يعيشون في بلد أو منطقة معينة. تخيل أنك تريد تنظيم حفلة كبيرة — أول شيء تحتاجه هو <strong style="color:${C.a2}">كم عدد الضيوف؟</strong></p>
-          <p class="muted">الحكومات تفعل نفس الشيء للبلد كله. لا يمكن التخطيط بدون معرفة دقيقة للأرقام.</p>
-        </div>
-      </div>
-      <div class="grid-4">
-        ${[['👥','كم عدد السكان؟'],['📍','أين يعيشون؟'],['👶','كم عدد الأطفال؟'],['💼','كم عدد العاملين؟']].map(([ic,tx])=>`
-          <div style="background:${C.a1}0d;border:1px solid ${C.a1}22;border-radius:12px;padding:.8rem 1rem;display:flex;gap:.6rem;align-items:center">
-            <span style="font-size:1.3rem">${ic}</span><span style="color:#e2e8f0;font-size:.87rem">${tx}</span>
-          </div>`).join('')}
-      </div>`)}
-    <div style="background:linear-gradient(135deg,#10b981,#059669);border-radius:20px;padding:1.8rem;color:#fff">
-      <h3 style="font-weight:700;font-size:1.2rem;margin-bottom:.7rem">🏆 مثال بسيط</h3>
-      <p style="line-height:1.9">لو كان لديك فصل دراسي، هل تستطيع التخطيط للدرس بدون معرفة عدد الطلاب؟ بالتأكيد لا! نفس الشيء للدولة — لا يمكنها التخطيط بدون معرفة عدد السكان 🎯</p>
-    </div>
-  </div>`;
-}
-
-function pageCounters() {
-  const counters = [
-    {ic:'🌍',v:'8.25 مليار',l:'سكان العالم (الأمم المتحدة 2025)',g:`linear-gradient(135deg,${C.a1},#0284c7)`},
-    {ic:'👶',v:'171 مليون',l:'مولود جديد كل عام',g:'linear-gradient(135deg,#ec4899,#be185d)'},
-    {ic:'🏙️',v:'57.7%',l:'نسبة سكان الحضر (البنك الدولي 2024)',g:`linear-gradient(135deg,${C.a2},#5b21b6)`},
-    {ic:'📚',v:'86.3%',l:'معدل الإلمام بالقراءة (UNESCO)',g:`linear-gradient(135deg,${C.a4},#065f46)`},
-    {ic:'⏳',v:'73.3 عاماً',l:'متوسط العمر المتوقع عالمياً',g:`linear-gradient(135deg,${C.a3},#b45309)`},
-    {ic:'🇸🇦',v:'35.3 مليون',l:'سكان المملكة 2024 (GASTAT)',g:'linear-gradient(135deg,#22c55e,#15803d)'},
-  ];
-  return `
-  ${tag('إحصاءات موثّقة')}${h2('الأرقام العالمية')}
-  <div class="grid-3" style="margin-top:1.5rem">
-    ${counters.map(c=>`
-      <div class="counter-card" style="background:${c.g}">
-        <div style="font-size:2rem;margin-bottom:.7rem">${c.ic}</div>
-        <div style="font-size:1.7rem;font-weight:900;font-family:Tajawal,sans-serif;margin-bottom:.3rem">${c.v}</div>
-        <div style="font-size:.75rem;opacity:.9;line-height:1.5">${c.l}</div>
-      </div>`).join('')}
-  </div>`;
-}
-
-const sectorsData = {
-  health:{ label:'🏥 الصحة', color:C.a1, desc:'الإحصاء السكاني هو الركيزة الأساسية لأي نظام صحي فعّال. معرفة التوزيع العمري والجغرافي تُمكّن من تحديد أعداد المستشفيات والأطباء بدقة.', stats:[{l:'تخطيط توزيع المستشفيات',v:92},{l:'التنبؤ بالأوبئة',v:85},{l:'توزيع الكوادر الطبية',v:78}], chartType:'pie', explain:'📊 مخطط دائري — كل شريحة تمثّل نسبة سبب وفاة. أمراض القلب تحتل 32% وهي الأعلى عالمياً.' },
-  education:{ label:'📚 التعليم', color:C.a2, desc:'كيف نعرف كم مدرسة يجب بناؤها؟ الجواب في الإحصاء السكاني. بيانات التعداد ساعدت في التوسع بالجامعات لمواكبة أعداد الشباب.', stats:[{l:'تخطيط بناء المدارس',v:96},{l:'توزيع المعلمين',v:88},{l:'تطوير المناهج',v:72}], chartType:'bar', explain:'📊 مخطط أعمدة — ارتفاع كل عمود يعكس معدل الالتحاق بالتعليم. انخفاض الجامعي يعكس تحدياً يحتاج بيانات لحله.' },
-  economy:{ label:'💰 الاقتصاد', color:C.a3, desc:'الإحصاء هو المرآة الحقيقية للاقتصاد. حجم السكان يحدد القوى العاملة والاستهلاك. دول الخليج ذات الهرم الشاب لديها إمكانية هائلة للنمو.', stats:[{l:'تخطيط سوق العمل',v:94},{l:'التنبؤ بالطلب الاستهلاكي',v:89},{l:'جذب الاستثمارات',v:81}], chartType:'line', explain:'📊 مخطط خطي — يتتبع تطور الناتج المحلي. الانخفاض عام 2016 (أزمة النفط) والتعافي بعده يظهران جلياً.' },
-  environment:{ label:'🌿 البيئة', color:C.a4, desc:'الضغط على المياه والأراضي الزراعية مرتبط بالنمو السكاني. المملكة تعتمد على بيانات النمو لاستثماراتها في محطات التحلية.', stats:[{l:'إدارة موارد المياه',v:93},{l:'تخطيط الأمن الغذائي',v:87},{l:'سياسات الطاقة المتجددة',v:79}], chartType:'radar', explain:'📊 مخطط راداري — كل محور مورد بيئي. اتساع المساحة = ضغط أكبر. المياه تتصدر بـ 80%.' },
-};
-
-function pageSectors() {
-  const s = sectorsData[currentSector];
-  return `
-  ${tag('التأثير على القطاعات')}${h2('كيف يخدم الإحصاء حياتنا؟')}
-  <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0;justify-content:center">
-    ${Object.entries(sectorsData).map(([k,v])=>`
-      <button class="sec-tab ${k===currentSector?'active-sec':''}" id="stab-${k}"
-        style="${k===currentSector?`border-color:${v.color};background:${v.color}20;color:${v.color}`:'color:#94a3b8'}"
-        onclick="switchSector('${k}')">${v.label}</button>`).join('')}
-  </div>
-  ${card(`
-    <h3 style="color:#e2e8f0;font-weight:700;font-size:1.2rem;margin-bottom:.8rem">${s.label}</h3>
-    <p class="muted" style="margin-bottom:1.5rem">${s.desc}</p>
-    <div class="grid-sectors" style="display:grid;grid-template-columns:1fr 1fr;gap:2rem">
-      <div style="display:flex;flex-direction:column;gap:1rem">
-        ${s.stats.map(st=>`
-          <div>
-            <div style="display:flex;justify-content:space-between;font-size:.83rem;margin-bottom:4px">
-              <span style="color:#94a3b8">${st.l}</span>
-              <span style="color:${s.color};font-weight:700">${st.v}%</span>
-            </div>
-            ${sbar(st.v, s.color)}
-          </div>`).join('')}
-      </div>
-      <div>
-        <div class="chart-wrap">
-          <canvas id="sectorChart" height="200"></canvas>
-        </div>
-        <div class="chart-explain">${s.explain}</div>
-      </div>
-    </div>`)}`;
-}
-
-function switchSector(s) {
-  currentSector = s;
-  destroyCharts();
-  document.getElementById('mainContent').innerHTML = `<div class="page-content">${pageSectors()}</div>`;
-  setTimeout(()=>buildSectorChart(), 50);
-}
-
-function buildSectorChart() {
-  const canvas = document.getElementById('sectorChart');
-  if(!canvas) return;
-  const s = sectorsData[currentSector];
-  const ctx = canvas.getContext('2d');
-  const dark = '#1e293b', grid = '#334155', muted = '#94a3b8';
-  let cfg;
-  if(s.chartType==='pie') {
-    cfg = { type:'doughnut', data:{ labels:['أمراض القلب','السرطانات','الجهاز التنفسي','السكري','أخرى'], datasets:[{data:[32,18,14,10,26], backgroundColor:[C.a1,C.a2,C.a3,C.a4,C.a5], borderWidth:0, hoverOffset:6}] }, options:{ plugins:{legend:{display:false}, tooltip:{rtl:true, bodyFont:{family:'Cairo'}, titleFont:{family:'Cairo'}, callbacks:{label:c=>`${c.label}: ${c.parsed}%`}}}, cutout:'55%', animation:{duration:800} } };
-  } else if(s.chartType==='bar') {
-    cfg = { type:'bar', data:{ labels:['ابتدائي','متوسط','ثانوي','جامعي'], datasets:[{data:[95,88,76,48], backgroundColor:[C.a1,C.a2,C.a3,C.a4], borderRadius:6, borderSkipped:false}] }, options:{ plugins:{legend:{display:false}, tooltip:{rtl:true, bodyFont:{family:'Cairo'}}}, scales:{ x:{ticks:{color:muted, font:{family:'Cairo'}}, grid:{color:grid}}, y:{ticks:{color:muted}, grid:{color:grid}} }, animation:{duration:800} } };
-  } else if(s.chartType==='line') {
-    cfg = { type:'line', data:{ labels:['2010','2013','2016','2019','2022','2025'], datasets:[{data:[0.5,0.75,0.65,0.78,1.1,1.2], borderColor:C.a3, backgroundColor:'rgba(245,158,11,.1)', fill:true, tension:.4, pointBackgroundColor:C.a3, pointRadius:5}] }, options:{ plugins:{legend:{display:false}, tooltip:{rtl:true, bodyFont:{family:'Cairo'}}}, scales:{ x:{ticks:{color:muted, font:{family:'Cairo'}}, grid:{color:grid}}, y:{ticks:{color:muted}, grid:{color:grid}} }, animation:{duration:800} } };
-  } else {
-    cfg = { type:'radar', data:{ labels:['المياه','الطاقة','الغذاء','الهواء','التربة','التنوع'], datasets:[{data:[80,65,70,55,60,45], backgroundColor:'rgba(16,185,129,.2)', borderColor:C.a4, pointBackgroundColor:C.a4}] }, options:{ plugins:{legend:{display:false}, tooltip:{rtl:true, bodyFont:{family:'Cairo'}}}, scales:{ r:{ticks:{color:muted, backdropColor:'transparent'}, grid:{color:grid}, angleLines:{color:grid}, pointLabels:{color:muted, font:{family:'Cairo', size:10}}} }, animation:{duration:800} } };
+  function animateBars() {
+    document.querySelectorAll('.compare-fill[data-w]').forEach(el => {
+      el.style.width = el.getAttribute('data-w');
+    });
   }
-  activeCharts['sector'] = new Chart(ctx, cfg);
-}
+  setTimeout(animateBars, 500);
 
-function pageBenefits() {
-  const items = [
-    {ic:'🏗️',t:'التخطيط العمراني',d:'معرفة عدد السكان يساعد في بناء المدن والبنية التحتية',ex:'إذا كان السكان 100,000 شخص نحتاج مدارس ومستشفيات كافية',g:`linear-gradient(135deg,${C.a1},#0284c7)`},
-    {ic:'🎓',t:'التعليم',d:'معرفة عدد الأطفال في سن المدرسة لبناء مدارس كافية',ex:'إذا كان 20,000 طالب نحتاج مدارس تكفي هذا العدد',g:`linear-gradient(135deg,${C.a4},#059669)`},
-    {ic:'🏥',t:'الصحة',d:'توفير الخدمات الصحية والمستشفيات حسب عدد السكان',ex:'كل 10,000 شخص يحتاجون مركزاً صحياً واحداً على الأقل',g:`linear-gradient(135deg,${C.a5},#be185d)`},
-    {ic:'💰',t:'الاقتصاد',d:'فهم سوق العمل واحتياجات المجتمع الاقتصادية',ex:'معرفة عدد الشباب يساعد في توفير فرص العمل المناسبة',g:`linear-gradient(135deg,${C.a2},#5b21b6)`},
-    {ic:'🏠',t:'الإسكان',d:'بناء وحدات سكنية كافية للسكان',ex:'إذا كان هناك 5,000 عائلة نحتاج مساكن كافية لهم',g:`linear-gradient(135deg,${C.a3},#b45309)`},
-    {ic:'👶',t:'التخطيط المستقبلي',d:'التنبؤ بالاحتياجات المستقبلية للمجتمع',ex:'معرفة معدل النمو يساعد في التخطيط للسنوات القادمة',g:'linear-gradient(135deg,#ec4899,#be185d)'},
-  ];
-  return `
-  ${tag('الأهمية')}${h2('لماذا مهم؟')}
-  <p class="muted" style="margin-bottom:1.4rem">اضغط على أي بطاقة لمعرفة مثال عملي</p>
-  <div class="grid-3" style="margin-bottom:1.4rem">
-    ${items.map((b,i)=>`
-      <div class="benefit-card ${openBenefit===i?'open':''}" onclick="toggleBenefit(${i})" id="bc-${i}">
-        <div style="background:${b.g};border-radius:12px;padding:.65rem;display:inline-flex;margin-bottom:.8rem;font-size:1.4rem">${b.ic}</div>
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1rem;margin-bottom:.4rem">${b.t}</h3>
-        <p class="muted" style="font-size:.85rem">${b.d}</p>
-        ${openBenefit===i?`<div style="margin-top:.9rem;padding-top:.9rem;border-top:1px solid rgba(0,212,255,.18)">
-          <p style="font-size:.72rem;color:${C.a1};margin-bottom:.35rem">💡 مثال عملي:</p>
-          <p style="font-size:.83rem;color:#cbd5e1;background:rgba(0,212,255,.06);border-radius:10px;padding:.65rem">${b.ex}</p>
-        </div>`:''}
-      </div>`).join('')}
-  </div>
-  <div style="background:linear-gradient(135deg,#f59e0b,#ef4444);border-radius:18px;padding:1.8rem;color:#fff">
-    <h3 style="font-weight:700;font-size:1.2rem;margin-bottom:.6rem">💡 الخلاصة</h3>
-    <p style="line-height:1.9">الإحصاء السكاني يساعد الدولة في اتخاذ القرارات الصحيحة لتوفير حياة أفضل للجميع. بدون هذه المعلومات، لن تعرف الحكومة ماذا تبني أو أين تبني أو كم تحتاج! 🏗️</p>
-  </div>`;
-}
-
-function toggleBenefit(i) {
-  openBenefit = openBenefit===i ? -1 : i;
-  document.getElementById('mainContent').innerHTML = `<div class="page-content">${pageBenefits()}</div>`;
-}
-
-function pageConcepts() {
-  return `
-  ${tag('مفاهيم أساسية')}${h2('الفرق بين النسبة والمعدل')}
-  <div class="grid-2" style="margin-top:1.5rem">
-    <div style="background:linear-gradient(135deg,#1e40af,#1d4ed8);border-radius:20px;padding:2rem;color:#fff">
-      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem"><span style="font-size:2rem">📊</span><h3 style="font-size:1.6rem;font-weight:900;font-family:Tajawal,sans-serif">النسبة</h3></div>
-      <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:1rem;margin-bottom:1rem">
-        <p style="font-weight:700;margin-bottom:.4rem">المقارنة بين شيئين</p>
-        <p style="opacity:.9;line-height:1.7;font-size:.9rem">تقارن بين مجموعتين مختلفتين من نفس الشيء</p>
-      </div>
-      <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:1rem;margin-bottom:1rem">
-        <p style="font-weight:700;margin-bottom:.4rem">مثال: نسبة الجنس</p>
-        <p style="font-size:.85rem;opacity:.9">عدد الذكور ÷ عدد الإناث</p>
-        <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:.65rem;margin-top:.5rem;font-size:.82rem;line-height:1.8">إذا كان 100 ذكر و80 أنثى<br>النسبة = 100 ÷ 80 = 1.25<br>أي: لكل أنثى 1.25 ذكر</div>
-      </div>
-      <div style="background:#fbbf24;color:#1e1b4b;border-radius:10px;padding:.7rem;text-align:center;font-weight:700">⭐ النسبة = جزء ÷ جزء آخر</div>
-    </div>
-    <div style="background:linear-gradient(135deg,#065f46,#047857);border-radius:20px;padding:2rem;color:#fff">
-      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1rem"><span style="font-size:2rem">📈</span><h3 style="font-size:1.6rem;font-weight:900;font-family:Tajawal,sans-serif">المعدل</h3></div>
-      <div style="background:rgba(255,255,255,.15);border-radius:12px;padding:1rem;margin-bottom:1rem">
-        <p style="font-weight:700;margin-bottom:.4rem">الجزء من الكل</p>
-        <p style="opacity:.9;line-height:1.7;font-size:.9rem">يقيس جزء معين من المجموع الكلي</p>
-      </div>
-      <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:1rem;margin-bottom:1rem">
-        <p style="font-weight:700;margin-bottom:.4rem">مثال: معدل المواليد</p>
-        <p style="font-size:.85rem;opacity:.9">عدد المواليد ÷ إجمالي السكان × 1000</p>
-        <div style="background:rgba(255,255,255,.15);border-radius:10px;padding:.65rem;margin-top:.5rem;font-size:.82rem;line-height:1.8">إذا كان 500 مولود و10,000 نسمة<br>المعدل = (500÷10,000)×1000 = 50<br>أي: 50 مولود لكل 1000 شخص</div>
-      </div>
-      <div style="background:#fbbf24;color:#064e3b;border-radius:10px;padding:.7rem;text-align:center;font-weight:700">⭐ المعدل = جزء ÷ الكل × 100</div>
-    </div>
-  </div>`;
-}
-
-function pageInteractive() {
-  const diff = pop2025 - pop2020;
-  const growth = pop2020 > 0 ? (diff/pop2020*100).toFixed(1) : 0;
-  const annual = pop2020 > 0 ? (diff/pop2020*100/5).toFixed(2) : 0;
-  return `
-  ${tag('تجربة تفاعلية')}${h2('أمثلة تفاعلية بالرسوم البيانية')}
-  <div style="display:flex;flex-direction:column;gap:2rem;margin-top:1rem">
-    ${card(`
-      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.3rem">
-        <div style="background:linear-gradient(135deg,#10b981,#059669);border-radius:12px;padding:.6rem;font-size:1.3rem">📈</div>
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.1rem">حساب النمو السكاني</h3>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem">
-        <div style="background:${C.a1}0d;border:1px solid ${C.a1}30;border-radius:12px;padding:1rem">
-          <label style="color:#e2e8f0;font-weight:700;display:block;margin-bottom:.5rem;font-size:.88rem">عدد السكان 2020</label>
-          <input class="stat-input" type="number" style="border:2px solid ${C.a1}" value="${pop2020}" oninput="pop2020=parseInt(this.value)||0;updateInteractive()"/>
-        </div>
-        <div style="background:${C.a4}0d;border:1px solid ${C.a4}30;border-radius:12px;padding:1rem">
-          <label style="color:#e2e8f0;font-weight:700;display:block;margin-bottom:.5rem;font-size:.88rem">عدد السكان 2025</label>
-          <input class="stat-input" type="number" style="border:2px solid ${C.a4}" value="${pop2025}" oninput="pop2025=parseInt(this.value)||0;updateInteractive()"/>
-        </div>
-      </div>
-      <div class="chart-wrap" style="margin-bottom:.5rem">
-        <canvas id="growthChart" height="180"></canvas>
-      </div>
-      <div class="chart-explain">📊 <strong style="color:#e2e8f0">مخطط المساحة</strong> — المنطقة الملوّنة تمثّل تراكم السكان. غيّر الأرقام وشاهد التغيير فوراً!</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem">
-        <div style="background:linear-gradient(135deg,${C.a2},#5b21b6);border-radius:12px;padding:1rem;color:#fff;text-align:center">
-          <p style="font-size:.75rem;margin-bottom:.3rem">الزيادة</p>
-          <p style="font-size:1.6rem;font-weight:900;font-family:Tajawal,sans-serif" id="diffVal">${diff.toLocaleString()}</p>
-          <p style="font-size:.72rem;opacity:.85">شخص</p>
-        </div>
-        <div style="background:linear-gradient(135deg,#ec4899,#be185d);border-radius:12px;padding:1rem;color:#fff;text-align:center">
-          <p style="font-size:.75rem;margin-bottom:.3rem">نسبة النمو</p>
-          <p style="font-size:1.6rem;font-weight:900;font-family:Tajawal,sans-serif" id="growthVal">${growth}</p>
-          <p style="font-size:.72rem;opacity:.85">%</p>
-        </div>
-        <div style="background:linear-gradient(135deg,${C.a3},#b45309);border-radius:12px;padding:1rem;color:#fff;text-align:center">
-          <p style="font-size:.75rem;margin-bottom:.3rem">المعدل السنوي</p>
-          <p style="font-size:1.6rem;font-weight:900;font-family:Tajawal,sans-serif" id="annualVal">${annual}</p>
-          <p style="font-size:.72rem;opacity:.85">% / سنة</p>
-        </div>
-      </div>`)}
-
-    ${card(`
-      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem">
-        <div style="background:linear-gradient(135deg,${C.a1},#0284c7);border-radius:12px;padding:.6rem;font-size:1.3rem">🏙️</div>
-        <h3 style="color:#e2e8f0;font-weight:700;font-size:1.1rem">حاسبة احتياجات المدينة</h3>
-      </div>
-      <div style="background:${C.a1}0d;border:1px solid ${C.a1}25;border-radius:12px;padding:1rem;margin-bottom:1.2rem">
-        <label style="color:#e2e8f0;font-weight:700;display:block;margin-bottom:.5rem">كم عدد السكان في مدينتك؟</label>
-        <input class="stat-input" type="number" style="border:2px solid ${C.a1};font-size:1.2rem" value="${cityPop}" oninput="cityPop=parseInt(this.value)||0;updateCity()"/>
-      </div>
-      <div class="grid-4">
-        <div style="background:linear-gradient(135deg,#0284c7,${C.a1});border-radius:12px;padding:1.1rem;color:#fff">
-          <div style="font-size:1.2rem;margin-bottom:.4rem">🎓</div>
-          <p style="font-size:.78rem;margin-bottom:.2rem">المدارس</p>
-          <p style="font-size:1.7rem;font-weight:900;font-family:Tajawal,sans-serif" id="schools">${Math.ceil(cityPop*.15/500)}</p>
-        </div>
-        <div style="background:linear-gradient(135deg,#be185d,#ec4899);border-radius:12px;padding:1.1rem;color:#fff">
-          <div style="font-size:1.2rem;margin-bottom:.4rem">🏥</div>
-          <p style="font-size:.78rem;margin-bottom:.2rem">المستشفيات</p>
-          <p style="font-size:1.7rem;font-weight:900;font-family:Tajawal,sans-serif" id="hospitals">${Math.ceil(cityPop/10000)}</p>
-        </div>
-        <div style="background:linear-gradient(135deg,#047857,${C.a4});border-radius:12px;padding:1.1rem;color:#fff">
-          <div style="font-size:1.2rem;margin-bottom:.4rem">🏠</div>
-          <p style="font-size:.78rem;margin-bottom:.2rem">الوحدات السكنية</p>
-          <p style="font-size:1.7rem;font-weight:900;font-family:Tajawal,sans-serif" id="houses">${Math.ceil(cityPop/4).toLocaleString()}</p>
-        </div>
-        <div style="background:linear-gradient(135deg,#6d28d9,${C.a2});border-radius:12px;padding:1.1rem;color:#fff">
-          <div style="font-size:1.2rem;margin-bottom:.4rem">🌳</div>
-          <p style="font-size:.78rem;margin-bottom:.2rem">الحدائق</p>
-          <p style="font-size:1.7rem;font-weight:900;font-family:Tajawal,sans-serif" id="parks">${Math.ceil(cityPop/5000)}</p>
-        </div>
-      </div>`)}
-  </div>`;
-}
-
-function updateInteractive() {
-  const diff = pop2025 - pop2020;
-  const growth = pop2020 > 0 ? (diff/pop2020*100).toFixed(1) : 0;
-  const annual = pop2020 > 0 ? (diff/pop2020*100/5).toFixed(2) : 0;
-  const dv = document.getElementById('diffVal');
-  const gv = document.getElementById('growthVal');
-  const av = document.getElementById('annualVal');
-  if(dv) dv.textContent = diff.toLocaleString();
-  if(gv) gv.textContent = growth;
-  if(av) av.textContent = annual;
-  buildGrowthChart();
-}
-
-function updateCity() {
-  const s = document.getElementById('schools');
-  const h = document.getElementById('hospitals');
-  const ho = document.getElementById('houses');
-  const p = document.getElementById('parks');
-  if(s) s.textContent = Math.ceil(cityPop*.15/500);
-  if(h) h.textContent = Math.ceil(cityPop/10000);
-  if(ho) ho.textContent = Math.ceil(cityPop/4).toLocaleString();
-  if(p) p.textContent = Math.ceil(cityPop/5000);
-}
-
-function buildGrowthChart() {
-  if(activeCharts['growth']) { try{activeCharts['growth'].destroy();}catch(e){} delete activeCharts['growth']; }
-  const canvas = document.getElementById('growthChart');
-  if(!canvas) return;
-  const years = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
-  const d = pop2025 - pop2020;
-  const data = [800,850,920,1000,1100, pop2020,
-    Math.round(pop2020+d*.2), Math.round(pop2020+d*.4),
-    Math.round(pop2020+d*.6), Math.round(pop2020+d*.8), pop2025];
-  const ctx = canvas.getContext('2d');
-  const grad = ctx.createLinearGradient(0,0,0,180);
-  grad.addColorStop(0,'rgba(0,212,255,.5)');
-  grad.addColorStop(1,'rgba(0,212,255,0)');
-  activeCharts['growth'] = new Chart(ctx, {
-    type:'line',
-    data:{ labels:years, datasets:[{data, borderColor:C.a1, backgroundColor:grad, fill:true, tension:.4, pointBackgroundColor:C.a1, pointRadius:3}] },
-    options:{ plugins:{legend:{display:false}, tooltip:{rtl:true, bodyFont:{family:'Cairo'}}}, scales:{ x:{ticks:{color:'#94a3b8', font:{family:'Cairo'}}, grid:{color:'#334155'}}, y:{ticks:{color:'#94a3b8'}, grid:{color:'#334155'}} }, animation:{duration:400} }
-  });
-}
-
-function pagePyramid() {
-  const rows = pyramidData.map(row=>`
-    <div class="pyr-row">
-      <div class="pyr-label">${row.age}</div>
-      <div class="pyr-bars">
-        <div style="position:absolute;right:50%;height:100%;width:${row.m/12*49}%;background:linear-gradient(90deg,${C.a2},${C.a1});border-radius:4px 0 0 4px"></div>
-        <div style="position:absolute;left:50%;height:100%;width:${row.f/12*49}%;background:linear-gradient(90deg,${C.a3},${C.a5});border-radius:0 4px 4px 0"></div>
-      </div>
-    </div>`).join('');
-  return `
-  ${tag('التركيبة السكانية')}${h2('الهرم السكاني للمملكة 2024')}
-  <p class="muted" style="margin-bottom:1.5rem">المصدر: GASTAT — 35.3 مليون نسمة | ذكور 62.1% بسبب العمالة الوافدة</p>
-  ${card(`
-    <div style="background:${C.a1}08;border:1px solid ${C.a1}18;border-radius:12px;padding:.85rem 1rem;margin-bottom:1.3rem;font-size:.8rem;color:#94a3b8;line-height:1.8">
-      📊 <strong style="color:#e2e8f0">كيف تقرأ الهرم السكاني؟</strong><br>
-      كل شريط = فئة عمرية. <strong style="color:${C.a1}">الأزرق (يمين)</strong> = ذكور، <strong style="color:${C.a3}">البرتقالي (يسار)</strong> = إناث. الأشرطة الطويلة في المنتصف تعني مجتمع <strong style="color:#e2e8f0">شاب منتج</strong>.
-    </div>
-    <div style="display:flex;justify-content:center;gap:2rem;margin-bottom:1rem;font-size:.8rem">
-      <div style="display:flex;align-items:center;gap:.4rem"><div style="width:14px;height:14px;border-radius:3px;background:linear-gradient(90deg,${C.a2},${C.a1})"></div><span>ذكور</span></div>
-      <div style="display:flex;align-items:center;gap:.4rem"><div style="width:14px;height:14px;border-radius:3px;background:linear-gradient(90deg,${C.a3},${C.a5})"></div><span>إناث</span></div>
-    </div>
-    ${rows}`)}`;
-}
-
-function pageHistory() {
-  const items = [
-    {y:'ق.م', t:'التعداد الروماني القديم', d:'أجرى الرومان تعدادات منتظمة كل 5 سنوات لأغراض الضرائب والتجنيد العسكري.'},
-    {y:'1086', t:'كتاب دومزداي', d:'أمر الملك وليام الفاتح بمسح شامل لإنجلترا — من أوائل التعدادات التفصيلية في التاريخ.'},
-    {y:'1798', t:'نظرية مالتوس', d:'أسّست مقالته حول السكان لعلم الديموغرافيا الحديث ونقاش العلاقة بين الموارد والسكان.'},
-    {y:'1950', t:'الأمم المتحدة وثورة الإحصاء', d:'توحيد معايير التعداد عالمياً أتاح مقارنة البيانات بين الدول لأول مرة في التاريخ.'},
-    {y:'2010', t:'الإحصاء الرقمي والبيانات الضخمة', d:'البيانات الرقمية والهواتف الذكية فتحت عصراً جديداً للإحصاء في الوقت الفعلي.'},
-    {y:'اليوم', t:'الذكاء الاصطناعي والتنبؤ السكاني', d:'خوارزميات التعلم الآلي تتنبأ بالتحولات السكانية بدقة غير مسبوقة لتحسين التخطيط.'},
-  ];
-  return `
-  ${tag('التاريخ والتطور')}${h2('محطات فارقة في تاريخ الإحصاء')}
-  <p class="muted" style="margin-bottom:2rem">من التعداد الروماني القديم إلى الذكاء الاصطناعي</p>
-  <div class="timeline-wrap">
-    <div class="timeline-line"></div>
-    ${items.map(it=>`
-      <div class="timeline-item">
-        <div class="tl-year">${it.y}</div>
-        <div class="tl-dot timeline-dot"></div>
-        <div class="tl-card card-hover">
-          <h4 style="color:#e2e8f0;font-weight:700;margin-bottom:.3rem;font-size:.95rem">${it.t}</h4>
-          <p style="color:#94a3b8;font-size:.85rem;line-height:1.7">${it.d}</p>
-        </div>
-      </div>`).join('')}
-  </div>`;
-}
-
-function pageSources() {
-  const srcs = [
-    {ic:'🌍', org:'الأمم المتحدة — شعبة السكان', d:'World Population Prospects 2024\nسكان العالم 8.25 مليار | متوسط العمر 73.3 سنة', c:C.a1},
-    {ic:'🏦', org:'البنك الدولي', d:'World Development Indicators 2024\nنسبة سكان الحضر: 57.7%', c:C.a3},
-    {ic:'📖', org:'UNESCO — معهد الإحصاء', d:'Global Education Monitoring\nمعدل الإلمام بالقراءة: 86.3%', c:C.a2},
-    {ic:'🇸🇦', org:'الهيئة العامة للإحصاء (GASTAT)', d:'تقديرات سكان المملكة 2024\n35.3 مليون | ذكور 62.1% | 0-14 (22.5%)', c:C.a4},
-  ];
-  return `
-  ${tag('المصادر والمراجع')}${h2('البيانات مستمدة من مصادر رسمية موثّقة')}
-  <p class="muted" style="margin-bottom:1.5rem">جميع الإحصاءات الواردة في هذا الموقع مستندة إلى مصادر دولية ومحلية موثوقة</p>
-  <div class="grid-2" style="margin-bottom:1.5rem">
-    ${srcs.map(s=>`
-      <div class="src-card card-hover">
-        <div class="src-top" style="background:${s.c}"></div>
-        <div style="font-size:2rem;margin-bottom:.7rem">${s.ic}</div>
-        <h4 style="color:#e2e8f0;font-weight:700;font-size:.95rem;margin-bottom:.5rem">${s.org}</h4>
-        <p style="color:#94a3b8;font-size:.82rem;line-height:1.8;white-space:pre-line">${s.d}</p>
-      </div>`).join('')}
-  </div>
-  <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:1.1rem 1.3rem">
-    <p style="color:#64748b;font-size:.8rem;line-height:1.8">⚠️ <strong style="color:#94a3b8">ملاحظة:</strong> النسب المئوية في أشرطة القطاعات هي أرقام توضيحية وليست إحصاءات مرجعية دقيقة من دراسات محددة.</p>
-  </div>`;
-}
-
-function pageQuiz() {
-  if(quizDone) {
-    return `
-    <div style="max-width:640px;margin:0 auto">
-      ${tag('تفاعل وتعلّم')}${h2('اختبر معلوماتك السكانية')}
-      ${card(`
-        <div style="text-align:center;padding:1.5rem 0">
-          <div style="font-size:4.5rem;font-weight:900;font-family:Tajawal,sans-serif;background:linear-gradient(135deg,${C.a1},${C.a2});-webkit-background-clip:text;-webkit-text-fill-color:transparent">${score}/5</div>
-          <p style="color:#94a3b8;margin-bottom:.5rem">من أصل 5 أسئلة</p>
-          <p style="color:${C.a1};font-size:1.1rem;margin-bottom:1.5rem">${score===5?'🎓 مثالي! عقل نادر ✨':score===4?'🏆 رائع! خبير إحصاء':score===3?'🌟 ممتاز! فهمك قوي':score===2?'📈 جيد! أنت على الطريق':'💪 حاول مجدداً!'}</p>
-          <button class="gbtn" style="background:linear-gradient(135deg,${C.a1},${C.a2})" onclick="resetQuiz()">أعد المحاولة 🔄</button>
-        </div>`)}
-    </div>`;
+  function answer(btn, correct) {
+    const opts = document.querySelectorAll('.quiz-opt');
+    opts.forEach(o => { o.disabled = true; o.style.cursor = 'default'; });
+    const fb = document.getElementById('qfeedback');
+    if (correct) {
+      btn.classList.add('correct');
+      fb.textContent = '✅ صح! المملكة تُسجّل 23.1% بحسب بيانات World Bank 2024 — أكثر من ضعف المعدل العالمي (9%).';
+      fb.style.color = '#a5d6a7';
+    } else {
+      btn.classList.add('wrong');
+      opts.forEach(o => { if(o.textContent.includes('23')) o.classList.add('correct'); });
+      fb.textContent = '❌ الجواب هو 23.1%. المملكة من أعلى دول العالم في معدل السكري — المصدر: World Bank 2024.';
+      fb.style.color = '#ef9a9a';
+    }
+    fb.classList.add('show');
   }
-  const q = quizData[qIdx];
-  const bars = quizData.map((_,i)=>`<div class="progress-bar ${i<qIdx?'done':i===qIdx?'current':''}"></div>`).join('');
-  const opts = q.opts.map((o,i)=>`
-    <button class="quiz-opt ${answered?(i===q.c?'correct':(i===selectedAns?'wrong':'disabled')):('' )}"
-      onclick="answerQuiz(${i})">${o}</button>`).join('');
-  return `
-  <div style="max-width:640px;margin:0 auto">
-    ${tag('تفاعل وتعلّم')}${h2('اختبر معلوماتك السكانية')}
-    <p class="muted" style="margin-bottom:1.5rem">5 أسئلة تختبر فهمك للإحصاء وأثره على واقعنا</p>
-    ${card(`
-      <div style="display:flex;gap:5px;margin-bottom:1.5rem">${bars}</div>
-      <p style="color:#e2e8f0;font-weight:700;font-size:1rem;line-height:1.7;margin-bottom:1.2rem">${q.q}</p>
-      ${opts}
-      ${answered?`
-        <div style="background:${selectedAns===q.c?C.a4+'18':C.a5+'18'};border:1px solid ${selectedAns===q.c?C.a4:C.a5};border-radius:12px;padding:.8rem 1rem;margin-bottom:1rem;color:#e2e8f0;font-size:.88rem;line-height:1.8">${q.f}</div>
-        <button class="gbtn" style="background:linear-gradient(135deg,${C.a1},${C.a2});width:100%;padding:.85rem;font-size:.95rem" onclick="nextQuestion()">${qIdx<quizData.length-1?'السؤال التالي →':'عرض النتيجة 🎯'}</button>`:''}
-    `)}
-  </div>`;
-}
-
-function answerQuiz(i) {
-  if(answered) return;
-  selectedAns = i;
-  answered = true;
-  if(i === quizData[qIdx].c) score++;
-  document.getElementById('mainContent').innerHTML = `<div class="page-content">${pageQuiz()}</div>`;
-}
-
-function nextQuestion() {
-  if(qIdx < quizData.length-1) { qIdx++; answered=false; selectedAns=-1; }
-  else { quizDone=true; }
-  document.getElementById('mainContent').innerHTML = `<div class="page-content">${pageQuiz()}</div>`;
-}
-
-function resetQuiz() {
-  qIdx=0; score=0; answered=false; selectedAns=-1; quizDone=false;
-  document.getElementById('mainContent').innerHTML = `<div class="page-content">${pageQuiz()}</div>`;
-}
-
-// ═══════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════
-function render() {
-  const pages = {
-    visitor: pageVisitor, intro: pageIntro, counters: pageCounters,
-    sectors: pageSectors, benefits: pageBenefits, concepts: pageConcepts,
-    interactive: pageInteractive, pyramid: pagePyramid,
-    history: pageHistory, sources: pageSources, quiz: pageQuiz,
-  };
-  const fn = pages[currentPage] || pageVisitor;
-  document.getElementById('mainContent').innerHTML = `<div class="page-content">${fn()}</div>`;
-  setTimeout(() => {
-    if(currentPage==='sectors') buildSectorChart();
-    if(currentPage==='interactive') buildGrowthChart();
-  }, 60);
-}
-
-// ═══════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════
-buildNav();
-render();
 </script>
 </body>
 </html>
